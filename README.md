@@ -37,6 +37,7 @@
 
 > **[?]**
 > This docker container enables you to simulate an attack on the ethereum protocol.
+> **[?]**
 > It fully simulates a ethereum chain within the docker container. Sending fake transactions back and forth
 > between different nodes.
 
@@ -57,7 +58,9 @@
 
 > **[?]**
 > Docker
+> **[?]**
 > Geth
+> **[?]**
 > Node
 
 ## Getting Started
@@ -66,13 +69,16 @@
 
 > **[?]**
 > Install docker on your computer
+> **[?]**
 > Install docker-compose on your computer if necessary*
 
 ### Installation
 
 > **[?]**
 > git clone to a local directory
+> **[?]**
 > cd /path/to/directory/
+> **[?]**
 > run docker-compose up -d
 
 ## Usage
@@ -132,6 +138,9 @@ See [LICENSE](LICENSE) for more information.
 
 > **[?]**
 > eth-netstats
+> **[?]**
 > epirus blockchain dashboard
+> **[?]**
 > ethereum
+> **[?]**
 > ethereum-docker
