@@ -1,0 +1,65 @@
+version: "3.6"
+services:
+  api:
+    image: web3labs/epirus-free-api:latest
+    environment:
+      - NODE_ENDPOINT=${NODE_ENDPOINT}
+      - MONGO_CLIENT_URI=mongodb://mongodb:27017
+      - REINDEX_ENDPOINT=http://ingestion/reindex/
+      - MONGO_DB_NAME=epirus
+      - MONGO_CREATE_INDICES=true
+    depends_on:
+      - mongodb
+    networks:
+      - epirus
+  
+  mongodb:
+    image: mongo:5.0.8
+    environment:
+      - COMPOSE_HTTP_TIMEOUT=900
+      - DOCKER_CLIENT_TIMEOUT=900
+    entrypoint: mongod --bind_ip "0.0.0.0"
+    networks:
+      - epirus
+
+  web:
+    image: web3labs/epirus-free-web:latest
+    environment:
+      - API_URL=/api
+    depends_on:
+      - api
+    networks:
+      - epirus
+  
+  ingestion:
+    image: web3labs/epirus-free-ingestion:latest
+    environment:
+      - NODE_ENDPOINT=${NODE_ENDPOINT}
+      - MONGO_CLIENT_URI=mongodb://mongodb:27017
+      - MONGO_DB_NAME=epirus
+    depends_on:
+      - mongodb
+    networks:
+      - epirus
+      
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./5xx.html:/www/error_pages/5xx.html
+    ports:
+      - 80:80
+    depends_on:
+      - api
+      - web
+    networks:
+      - epirus
+
+networks:
+  epirus:
+    name: epirus-net
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.239.0/24

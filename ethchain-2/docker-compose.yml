@@ -1,0 +1,79 @@
+
+version: '3.8'
+
+services:
+  geth-bootnode:
+    hostname: geth-bootnode
+    container_name: bootnode
+    env_file:
+      - config/.env
+    build: geth-bootnode
+    platform: linux/arm64
+    command:
+     --nodekey /root/bootnode.txt
+    networks:
+      - priv-eth-net
+    volumes:
+      - ./blockchain-data/keystore:/root/.ethereum/devchain/keystore:rw
+      - ./config/bootnode.txt:/root/bootnode.txt:ro
+      - ./config/bootnodeaddress.txt:/root/bootnodeaddress.txt:ro
+
+  geth-rpc-endpoint:
+    hostname: geth-rpc-endpoint
+    container_name: rpc-endpoint
+    build: geth-node
+    platform: linux/arm64
+    depends_on:
+      - geth-bootnode    
+    command:
+      --bootnodes="enode://43974299a4c52b220d8eed430a7ed1479f29548041e3ca67ddc1a4886835878c174d45dfd9e73ebd4901e8071c5bb19003f52e4e408e8ec5ce350f8f74a335a8@geth-bootnode:30301"
+      --allow-insecure-unlock
+      --http
+      --http.addr="0.0.0.0"
+      --http.api admin,debug,web3,eth,txpool,personal,clique,miner,net
+      --http.corsdomain="*"
+      --http.port 8545
+      --networkid=314159
+      --netrestrict="172.16.254.0/28"
+      --ws.api "admin,debug,web3,eth,txpool,personal,clique,miner,net" 
+      --ws 
+      --ws.addr 0.0.0.0 
+      --ws.port 8546 
+      --ws.origins "*" 
+      --http.vhosts "*" 
+      --syncmode "full" 
+      --gcmode "archive"
+    ports:
+      - "8545:8545"
+    networks:
+      - priv-eth-net
+    volumes:
+      - ./blockchain-data/keystore:/root/.ethereum/devchain/keystore:rw
+
+  geth-signer:
+    hostname: geth-signer
+    container_name: signer
+    build: geth-node
+    platform: linux/arm64
+    depends_on:
+      - geth-bootnode
+      - geth-rpc-endpoint
+    command:
+      --bootnodes="enode://43974299a4c52b220d8eed430a7ed1479f29548041e3ca67ddc1a4886835878c174d45dfd9e73ebd4901e8071c5bb19003f52e4e408e8ec5ce350f8f74a335a8@geth-bootnode:30301"
+      --unlock 0x3bcf84dd3ee4c8e3d99bdf37a6ce32a7562c93bf
+      --mine
+      --password /root/.ethereum/password.txt
+      --networkid=314159
+      --netrestrict="172.16.254.0/28"
+    networks:
+      - priv-eth-net
+    volumes:
+      - ./blockchain-data/keystore:/root/.ethereum/keystore:rw
+      - ./blockchain-data/password.txt:/root/.ethereum/password.txt:ro
+
+networks:
+  priv-eth-net:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.16.254.0/28
