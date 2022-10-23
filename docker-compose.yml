@@ -5,11 +5,11 @@ services:
     restart: on-failure
     container_name: bootstrap
     hostname: bootstrap
-    entrypoint: /root/start.sh
     links:
       - netstats
       - blockscout
-    command: '--http --http.addr 0.0.0.0 --port 30303 --http.port 8545 --http.api debug,net,eth,shh,web3,txpool --ws.api "eth,net,web3,network,debug,txpool" --ws --ws.addr 0.0.0.0 --ws.port 8546 --ws.origins "*" --datadir=~/.ethereum/devchain --nodekeyhex=091bd6067cb4612df85d9c1ff85cc47f259ced4d4cd99816b14f35650f59c322 --networkid=456719 --http.vhosts "*"'
+    entrypoint: /root/start.sh
+    command: '--datadir=~/.ethereum/devchain --nodekeyhex=091bd6067cb4612df85d9c1ff85cc47f259ced4d4cd99816b14f35650f59c322 --networkid=456719 --http --port 30305 --http.port 8545 --http.api debug,net,eth,shh,web3,txpool --ws.api "eth,net,web3,network,debug,txpool"--ws --ws.addr 0.0.0.0 --ws.port 8546 --ws.origins "*" --http.vhosts "*"'
     volumes:
       - ./config/data/password:/root/files/password:ro
       - ./config/genesis.json:/root/files/genesis.json:ro
@@ -17,8 +17,8 @@ services:
       - ./.ethereum:/root/.ethereum:rw
       - /etc/localtime:/etc/localtime:ro
     ports:
-      - "30303:30303"
-      - "30303:30303/udp"
+      - "30305:30305"
+      - "30305:30305/udp"
       - "8545:8545"
   eth:
     build: blockchain/monitored-node
@@ -32,7 +32,7 @@ services:
       - ./config/genesis.json:/root/files/genesis.json:ro
       - ./config/data/keystore:/root/.ethereum/devchain/keystore:rw
       - /etc/localtime:/etc/localtime:ro
-    command: '--datadir=~/.ethereum/devchain --networkid=456719 --bootnodes="enode://288b97262895b1c7ec61cf314c2e2004407d0a5dc77566877aad1f2a36659c8b698f4b56fd06c4a0c0bf007b4cfb3e7122d907da3b005fa90e724441902eb19e@XXX:30303" --preload loadscript.js'
+    command: '--datadir=~/.ethereum/devchain --networkid=456719 --bootnodes="enode://288b97262895b1c7ec61cf314c2e2004407d0a5dc77566877aad1f2a36659c8b698f4b56fd06c4a0c0bf007b4cfb3e7122d907da3b005fa90e724441902eb19e@XXX:30305" --preload loadscript.js'
   netstats:
     build: dashboard
     restart: on-failure
@@ -48,13 +48,11 @@ services:
     build: blockchain/monitored-node
     restart: on-failure
     container_name: miner
-    hostname: miner
     entrypoint: /root/start.sh
     links:
       - netstats
-      - blockscout
       - bootstrap
-    command: '--unlock 0x007ccffb7916f37f7aeef05e8096ecfbe55afc2f --datadir=~/.ethereum/devchain --networkid=456719 --bootnodes="enode://288b97262895b1c7ec61cf314c2e2004407d0a5dc77566877aad1f2a36659c8b698f4b56fd06c4a0c0bf007b4cfb3e7122d907da3b005fa90e724441902eb19e@XXX:30303" --password "" --mine'
+    command: '--unlock 0x007ccffb7916f37f7aeef05e8096ecfbe55afc2f --datadir=~/.ethereum/devchain --networkid=456719 --bootnodes="enode://288b97262895b1c7ec61cf314c2e2004407d0a5dc77566877aad1f2a36659c8b698f4b56fd06c4a0c0bf007b4cfb3e7122d907da3b005fa90e724441902eb19e@XXX:30305" --password /root/files/password/pass.txt --mine'
     volumes:
       - ./config/data/password:/root/files/password:ro
       - ./config/genesis.json:/root/files/genesis.json:ro

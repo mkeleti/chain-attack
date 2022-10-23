@@ -1,0 +1,7 @@
+# database
+postgres-data
+redis-data
+
+# ethereum
+.ethereum
+
