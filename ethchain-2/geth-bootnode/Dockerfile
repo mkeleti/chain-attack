@@ -1,4 +1,9 @@
+FROM ethereum/client-go:v1.10.1
 
-FROM ethereum/client-go:alltools-v1.10.1
+ARG ACCOUNT_PASSWORD
 
-ENTRYPOINT ["bootnode"]
+COPY genesis.json /tmp
+
+RUN geth init /tmp/genesis.json
+
+ENTRYPOINT ["geth"]
