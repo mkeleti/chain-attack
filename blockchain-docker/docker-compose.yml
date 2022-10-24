@@ -1,6 +1,7 @@
 
 version: '3.8'
 
+# If running Intel/AMD change linux/arm64 to linux/amd64
 services:
   geth-bootnode:
     hostname: geth-bootnode
@@ -35,6 +36,8 @@ services:
   geth-rpc-endpoint:
     hostname: geth-rpc-endpoint
     container_name: rpc-endpoint
+    env_file:
+      - config/.env
     build: geth-node
     platform: linux/arm64
     depends_on:
@@ -68,6 +71,8 @@ services:
   geth-signer:
     hostname: geth-signer
     container_name: signer
+    env_file:
+      - config/.env
     build: geth-node
     platform: linux/arm64
     depends_on:
