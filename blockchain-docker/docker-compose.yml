@@ -1,0 +1,99 @@
+
+version: '3.8'
+
+services:
+  geth-bootnode:
+    hostname: geth-bootnode
+    container_name: bootnode
+    env_file:
+      - config/.env
+    build: geth-node
+    platform: linux/arm64
+    command:
+      # --networkid=314159
+      #      --netrestrict "255.255.255.248/28"
+      # --nat extip:"255.255.255.242"
+      # --port 30301
+      #   --syncmode "full"
+      #--ipcdisable
+      #--maxpeers 3
+     --ipcdisable
+     --nodekey /root/bootnode.txt
+     --config /root/bootnode.toml
+    networks:
+      priv-eth-net:
+        ipv4_address: "255.255.255.242"
+    volumes:
+      - ./blockchain-data/keystore:/root/.ethereum/devchain/keystore:rw
+      - ./config/bootnode.txt:/root/bootnode.txt:ro
+      - ./config/bootnodeaddress.txt:/root/bootnodeaddress.txt:ro
+      - ./config/bootnode.toml:/root/bootnode.toml:ro
+    ports:
+      - "30301:30301"
+      - "30301:30301/udp"
+
+  geth-rpc-endpoint:
+    hostname: geth-rpc-endpoint
+    container_name: rpc-endpoint
+    build: geth-node
+    platform: linux/arm64
+    depends_on:
+      - geth-bootnode    
+    command: 
+      --bootnodes "enode://43974299a4c52b220d8eed430a7ed1479f29548041e3ca67ddc1a4886835878c174d45dfd9e73ebd4901e8071c5bb19003f52e4e408e8ec5ce350f8f74a335a8@255.255.255.242:30301"
+      --networkid=314159
+      --allow-insecure-unlock
+      --http
+      --http.api admin,debug,web3,eth,txpool,personal,clique,miner,net
+      --port 30301
+      --netrestrict="255.255.255.248/28"
+      --ws
+      --ws.origins '*' 
+      --ws.api "admin,debug,web3,eth,txpool,personal,clique,miner,net" 
+      --syncmode "full"
+      --gcmode "archive"
+      --txlookuplimit 0
+      --nat extip:"255.255.255.243"
+      --nodekey=/root/rpc.txt
+    ports:
+      - "8545:8545"
+      - "8546:8546"
+    networks:
+      priv-eth-net:
+        ipv4_address: "255.255.255.243"
+    volumes:
+      - ./blockchain-data/keystore:/root/.ethereum/devchain/keystore:rw
+      - ./config/rpc.txt:/root/rpc.txt:ro
+
+  geth-signer:
+    hostname: geth-signer
+    container_name: signer
+    build: geth-node
+    platform: linux/arm64
+    depends_on:
+      - geth-bootnode
+      - geth-rpc-endpoint
+    command:
+      --bootnodes "enode://43974299a4c52b220d8eed430a7ed1479f29548041e3ca67ddc1a4886835878c174d45dfd9e73ebd4901e8071c5bb19003f52e4e408e8ec5ce350f8f74a335a8@255.255.255.242:30301"
+      --nodekey=/root/miner.txt
+      --unlock 0x3bcf84dd3ee4c8e3d99bdf37a6ce32a7562c93bf
+      --mine
+      --port 30301
+      --password /root/.ethereum/password.txt
+      --networkid=314159
+      --netrestrict="255.255.255.248/28"
+      --nat extip:"255.255.255.244"
+    networks:
+      priv-eth-net:
+        ipv4_address: "255.255.255.244"
+    volumes:
+      - ./blockchain-data/keystore:/root/.ethereum/keystore:rw
+      - ./blockchain-data/password.txt:/root/.ethereum/password.txt:ro
+      - ./config/miner.txt:/root/miner.txt:ro
+
+networks:
+  priv-eth-net:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 255.255.255.248/28
