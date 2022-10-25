@@ -13,7 +13,7 @@
     "istanbulBlock": 999999999,
     "berlinBlock": 999999999,
     "clique": {
-      "period": 15,
+      "period": 1,
       "epoch": 30000
     }
   },
