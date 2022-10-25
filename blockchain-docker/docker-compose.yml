@@ -48,10 +48,12 @@ services:
       --allow-insecure-unlock
       --http
       --http.api admin,debug,web3,eth,txpool,personal,clique,miner,net
+      --http.addr 0.0.0.0
       --port 30301
       --netrestrict="255.255.255.248/28"
       --ws
       --ws.origins '*' 
+      --ws.addr 0.0.0.0
       --ws.api "admin,debug,web3,eth,txpool,personal,clique,miner,net" 
       --syncmode "full"
       --gcmode "archive"
@@ -59,13 +61,14 @@ services:
       --nat extip:"255.255.255.243"
       --nodekey=/root/rpc.txt
     ports:
-      - "8545:8545"
-      - "8546:8546"
+      - "127.0.0.1:8545:8545"
+      - "127.0.0.1:7545:8546"
     networks:
       priv-eth-net:
         ipv4_address: "255.255.255.243"
     volumes:
       - ./blockchain-data/keystore:/root/.ethereum/devchain/keystore:rw
+      - ./blockchain-data/keystore:/root/.ethereum/keystore:rw
       - ./config/rpc.txt:/root/rpc.txt:ro
 
   geth-signer:
