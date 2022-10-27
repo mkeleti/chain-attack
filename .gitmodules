@@ -1,0 +1,3 @@
+[submodule "ChainDashboard"]
+	path = ChainDashboard
+	url = https://github.com/mkeleti/ChainDashboard.git
