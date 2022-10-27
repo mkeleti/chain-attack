@@ -12,7 +12,7 @@ networks:
 services:
   geth-bootnode:
     hostname: geth-bootnode
-    container_name: bootnode
+    container_name: Boot-Node
     env_file:
       - blockchain-docker/config/.env
     build: blockchain-docker/geth-node
@@ -42,7 +42,7 @@ services:
 
   geth-rpc-endpoint:
     hostname: geth-rpc-endpoint
-    container_name: rpc-endpoint
+    container_name: RPC-Node
     restart: on-failure
     env_file:
       - blockchain-docker/config/.env
@@ -81,7 +81,7 @@ services:
 
   geth-signer:
     hostname: geth-signer
-    container_name: signer
+    container_name: Miner-Node
     env_file:
       - blockchain-docker/config/.env
     build: blockchain-docker/geth-node
@@ -112,7 +112,26 @@ services:
 
   chain-dashboard:
     hostname: chain-dashboard
-    container_name: dashboard
+    depends_on:
+      - geth-bootnode
+      - mongodb
+    container_name: Dashboard
     build: ChainDashboard
     ports:
       - "3000:3000"
+
+
+# MongoDB Container
+  
+  mongodb:
+    container_name: MongoDB
+    depends_on:
+      - geth-bootnode
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=geth
+      - MONGO_INITDB_ROOT_PASSWORD=blockchaindb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./ChainDashboard/mongo-data:/data/db
