@@ -7,8 +7,8 @@ services:
     hostname: geth-bootnode
     container_name: bootnode
     env_file:
-      - config/.env
-    build: geth-node
+      - blockchain-docker/config/.env
+    build: blockchain-docker/geth-node
     platform: linux/arm64
     command:
       # --networkid=314159
@@ -25,10 +25,10 @@ services:
       priv-eth-net:
         ipv4_address: "255.255.255.242"
     volumes:
-      - ./blockchain-data/keystore:/root/.ethereum/devchain/keystore:rw
-      - ./config/bootnode.txt:/root/bootnode.txt:ro
-      - ./config/bootnodeaddress.txt:/root/bootnodeaddress.txt:ro
-      - ./config/bootnode.toml:/root/bootnode.toml:ro
+      - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/devchain/keystore:rw
+      - ./blockchain-docker/config/bootnode.txt:/root/bootnode.txt:ro
+      - ./blockchain-docker/config/bootnodeaddress.txt:/root/bootnodeaddress.txt:ro
+      - ./blockchain-docker/config/bootnode.toml:/root/bootnode.toml:ro
     ports:
       - "30301:30301"
       - "30301:30301/udp"
@@ -38,8 +38,8 @@ services:
     container_name: rpc-endpoint
     restart: on-failure
     env_file:
-      - config/.env
-    build: geth-node
+      - blockchain-docker/config/.env
+    build: blockchain-docker/geth-node
     platform: linux/arm64
     depends_on:
       - geth-bootnode    
@@ -68,16 +68,16 @@ services:
       priv-eth-net:
         ipv4_address: "255.255.255.243"
     volumes:
-      - ./blockchain-data/keystore:/root/.ethereum/devchain/keystore:rw
-      - ./blockchain-data/keystore:/root/.ethereum/keystore:rw
-      - ./config/rpc.txt:/root/rpc.txt:ro
+      - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/devchain/keystore:rw
+      - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/keystore:rw
+      - ./blockchain-docker/config/rpc.txt:/root/rpc.txt:ro
 
   geth-signer:
     hostname: geth-signer
     container_name: signer
     env_file:
-      - config/.env
-    build: geth-node
+      - blockchain-docker/config/.env
+    build: blockchain-docker/geth-node
     platform: linux/arm64
     depends_on:
       - geth-bootnode
@@ -96,9 +96,9 @@ services:
       priv-eth-net:
         ipv4_address: "255.255.255.244"
     volumes:
-      - ./blockchain-data/keystore:/root/.ethereum/keystore:rw
-      - ./blockchain-data/password.txt:/root/.ethereum/password.txt:ro
-      - ./config/miner.txt:/root/miner.txt:ro
+      - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/keystore:rw
+      - ./blockchain-docker/blockchain-data/password.txt:/root/.ethereum/password.txt:ro
+      - ./blockchain-docker/config/miner.txt:/root/miner.txt:ro
 
 networks:
   priv-eth-net:
