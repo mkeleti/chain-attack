@@ -36,6 +36,7 @@ services:
   geth-rpc-endpoint:
     hostname: geth-rpc-endpoint
     container_name: rpc-endpoint
+    restart: on-failure
     env_file:
       - config/.env
     build: geth-node

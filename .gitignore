@@ -5,3 +5,7 @@ redis-data
 # ethereum
 .ethereum
 
+
+# Dashboard
+ChainDashboard
+
