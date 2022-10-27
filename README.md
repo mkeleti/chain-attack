@@ -12,65 +12,26 @@
   <a href="https://github.com/mkeleti/ethchain-app/issues/new?assignees=&labels=question&template=04_SUPPORT_QUESTION.md&title=support%3A+">Ask a Question</a>
 </div>
 
-<details open="open">
-<summary>Table of Contents</summary>
-
-- [About](#about)
-  - [Built With](#built-with)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Usage](#usage)
-- [Roadmap](#roadmap)
-- [Support](#support)
-- [Project assistance](#project-assistance)
-- [Contributing](#contributing)
-- [Authors & contributors](#authors--contributors)
-- [License](#license)
-- [Acknowledgements](#acknowledgements)
-
-</details>
-
 ---
-
 ## About
 
-> **[?]**
-> This docker container enables you to simulate an attack on the ethereum protocol.
-> **[?]**
-> It fully simulates a ethereum chain within the docker container. Sending fake transactions back and forth
-> between different nodes.
-
-<details>
-<summary>Screenshots</summary>
-<br>
-
-> **[?]**
-> Please provide your screenshots here.
-
-|                               Home Page                               |                               Login Page                               |
-| :-------------------------------------------------------------------: | :--------------------------------------------------------------------: |
-| <img src="docs/images/screenshot.png" title="Home Page" width="100%"> | <img src="docs/images/screenshot.png" title="Login Page" width="100%"> |
-
-</details>
+This provides a docker container where you can observe a ethereum chain in action.
 
 ### Built With
 
-> **[?]**
-> Docker
-> **[?]**
-> Geth
-> **[?]**
-> Node
+Docker, GETH, Nodejs, Nextjs, and Blockscout
 
 ## Getting Started
 
+1. Clone the repo
+2. Change your directory to the cloned repo
+3. Run docker-compose up -d
+4. Go to localhost:4000 for blockscout and localhost:3000 for attacking dashboard.
 ### Prerequisites
 
-> **[?]**
-> Install docker on your computer
-> **[?]**
-> Install docker-compose on your computer if necessary*
+
+Install docker on your computer
+Install docker-compose on your computer if necessary*
 
 ### Installation
 
