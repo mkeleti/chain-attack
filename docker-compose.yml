@@ -107,3 +107,12 @@ services:
       - ./blockchain-docker/blockchain-data/password.txt:/root/.ethereum/password.txt:ro
       - ./blockchain-docker/config/miner.txt:/root/miner.txt:ro
 
+
+# Dashboard container
+
+  chain-dashboard:
+    hostname: chain-dashboard
+    container_name: dashboard
+    build: ChainDashboard
+    ports:
+      - "3000:3000"
