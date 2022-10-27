@@ -1,6 +1,13 @@
 
 version: '3.8'
 
+networks:
+  priv-eth-net:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 255.255.255.248/28
+
 # If running Intel/AMD change linux/arm64 to linux/amd64
 services:
   geth-bootnode:
@@ -100,9 +107,3 @@ services:
       - ./blockchain-docker/blockchain-data/password.txt:/root/.ethereum/password.txt:ro
       - ./blockchain-docker/config/miner.txt:/root/miner.txt:ro
 
-networks:
-  priv-eth-net:
-    driver: bridge
-    ipam:
-      config:
-      - subnet: 255.255.255.248/28
