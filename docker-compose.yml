@@ -58,10 +58,12 @@ services:
       --http.api admin,debug,web3,eth,txpool,personal,clique,miner,net
       --http.addr 0.0.0.0
       --http.vhosts "*"
-      --port 30301
+      --http.port 8545
+      --port 30303
       --netrestrict="255.255.255.248/28"
       --ws
       --ws.origins '*' 
+      --ws.port 8546
       --ws.addr 0.0.0.0
       --ws.api "admin,debug,web3,eth,txpool,personal,clique,miner,net" 
       --syncmode "full"
@@ -70,8 +72,8 @@ services:
       --nat extip:"255.255.255.243"
       --nodekey=/root/rpc.txt
     ports:
-      - "127.0.0.1:8545:8545"
-      - "127.0.0.1:7545:8546"
+      - "8545:8545"
+      - "8546:8546"
     networks:
       priv-eth-net:
         ipv4_address: "255.255.255.243"
@@ -95,7 +97,7 @@ services:
       --nodekey=/root/miner.txt
       --unlock 0x3bcf84dd3ee4c8e3d99bdf37a6ce32a7562c93bf
       --mine
-      --port 30301
+      --port 30303
       --password /root/.ethereum/password.txt
       --networkid=314159
       --netrestrict="255.255.255.248/28"
@@ -130,8 +132,8 @@ services:
       - 6379:6379
     container_name: redis_db
     command: redis-server
-    volumes:
-      - ./redis-data:/data
+   # volumes:
+   #   - ./redis-data:/data
 
   db:
     image: postgres:14
@@ -141,8 +143,8 @@ services:
         POSTGRES_PASSWORD: ''
         POSTGRES_USER: 'postgres'
         POSTGRES_HOST_AUTH_METHOD: 'trust'
-    volumes:
-      - ./postgres-data:/var/lib/postgresql/data
+   # volumes:
+    #  - ./postgres-data:/var/lib/postgresql/data
     ports:
       - 7432:5432
 
@@ -170,8 +172,8 @@ services:
         SECRET_KEY_BASE: '56NtB48ear7+wMSf0IQuWDAAazhpb31qyc7GiyspBP2vh7t5zlCsF5QDv76chXeN'
     ports:
       - 4000:4000
-    volumes:
-      - ./logs/:/app/logs/
+   # volumes:
+   #   - ./logs/:/app/logs/
 
   smart-contract-verifier:
     image: ghcr.io/blockscout/smart-contract-verifier:${SMART_CONTRACT_VERIFIER_DOCKER_TAG:-latest}
