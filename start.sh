@@ -12,9 +12,13 @@ if [ -x "$(command -v docker)" ]; then
     echo "Opening website"
     python -m webbrowser -n "http://127.0.0.1:3000"
     echo "Pausing & Unpausing miners for correct sync"
-    sleep 3
+    sleep 5
     docker compose restart geth-signer-2
-    sleep 3
+    sleep 10
+    docker compose restart geth-signer-2
+    sleep 15
+    docker compose restart geth-signer-2
+    sleep 20
     docker compose restart geth-signer-2
     echo "Done! You can access the website at http://127.0.0.1:3000"
 else
