@@ -59,7 +59,6 @@ services:
       --http.addr 0.0.0.0
       --http.vhosts "*"
       --http.port 8545
-      --port 30303
       --netrestrict="255.255.255.248/28"
       --ws
       --ws.origins '*' 
@@ -68,12 +67,15 @@ services:
       --ws.api "admin,debug,web3,eth,txpool,personal,clique,miner,net" 
       --syncmode "full"
       --gcmode "archive"
-      --txlookuplimit 0
-      --nat extip:"255.255.255.243"
+      --txlookuplimit 0 
       --nodekey=/root/rpc.txt
+      --port 30304
+      --nat extip:"255.255.255.243"
     ports:
       - "8545:8545"
       - "8546:8546"
+      - "30304:30304"
+      - "30304:30304/udp"
     networks:
       priv-eth-net:
         ipv4_address: "255.255.255.243"
@@ -81,7 +83,6 @@ services:
       - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/devchain/keystore:rw
       - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/keystore:rw
       - ./blockchain-docker/config/rpc.txt:/root/rpc.txt:ro
-
   geth-signer:
     hostname: geth-signer
     container_name: Miner-Node
@@ -93,14 +94,15 @@ services:
       - geth-bootnode
       - geth-rpc-endpoint
     command:
-      --bootnodes "enode://43974299a4c52b220d8eed430a7ed1479f29548041e3ca67ddc1a4886835878c174d45dfd9e73ebd4901e8071c5bb19003f52e4e408e8ec5ce350f8f74a335a8@255.255.255.242:30301"
+      --bootnodes "enode://43974299a4c52b220d8eed430a7ed1479f29548041e3ca67ddc1a4886835878c174d45dfd9e73ebd4901e8071c5bb19003f52e4e408e8ec5ce350f8f74a335a8@255.255.255.242:30301, enode://8a9f6e0f6e579e2eda70f8022021ecace552268db2eb6f9cd2fd29aee9d3a2e2c6a622fe6fefa83f41cd5a9fbf85b9b7e7ff696c3df72443b258a0cf51086555@255.255.255.243:30304"
       --nodekey=/root/miner.txt
       --unlock 0x3bcf84dd3ee4c8e3d99bdf37a6ce32a7562c93bf
       --mine
-      --port 30303
       --password /root/.ethereum/password.txt
       --networkid=314159
       --netrestrict="255.255.255.248/28"
+      --ipcdisable
+      --port 30305
       --nat extip:"255.255.255.244"
     networks:
       priv-eth-net:
@@ -109,7 +111,42 @@ services:
       - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/keystore:rw
       - ./blockchain-docker/blockchain-data/password.txt:/root/.ethereum/password.txt:ro
       - ./blockchain-docker/config/miner.txt:/root/miner.txt:ro
-
+    ports:
+    - "30305:30305"
+    - "30305:30305/udp"
+  geth-signer-2:
+    hostname: geth-signer2
+    container_name: Miner-Node-2
+    env_file:
+      - blockchain-docker/config/.env
+    build: blockchain-docker/geth-node
+    platform: linux/arm64
+    depends_on:
+      - geth-bootnode
+      - geth-rpc-endpoint
+      - geth-signer
+      - blockscout
+    command:
+      --bootnodes "enode://43974299a4c52b220d8eed430a7ed1479f29548041e3ca67ddc1a4886835878c174d45dfd9e73ebd4901e8071c5bb19003f52e4e408e8ec5ce350f8f74a335a8@255.255.255.242:30301, enode://32550d2084b947c7dd7500f8f0e2dc47b8ca5cdab07a56c3535c24624767f12bbd37b4e6eca391f406debebede289c7403c675f7c3143243419e82fc39778899@255.255.255.244:30305, enode://8a9f6e0f6e579e2eda70f8022021ecace552268db2eb6f9cd2fd29aee9d3a2e2c6a622fe6fefa83f41cd5a9fbf85b9b7e7ff696c3df72443b258a0cf51086555@255.255.255.243:30304"
+      --unlock 0xe1f5c19a40c4cc55dd5b98116a05d342da9064b3
+      --mine
+      --miner.etherbase 0xe1f5c19a40c4cc55dd5b98116a05d342da9064b3
+      --password /root/.ethereum/password.txt
+      --networkid=314159
+      --netrestrict="255.255.255.248/28"
+      --ipcdisable
+      --port 30306
+      --nat extip:"255.255.255.245"
+    ports:
+      - "30306:30306"
+      - "30306:30306/udp"
+    networks:
+      priv-eth-net:
+        ipv4_address: "255.255.255.245"
+    volumes:
+      - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/keystore:rw
+      - ./blockchain-docker/blockchain-data/password.txt:/root/.ethereum/password.txt:ro
+      - ./blockchain-docker/config/miner.txt:/root/miner.txt:ro
 
 # Dashboard container
 
@@ -153,6 +190,7 @@ services:
       - db
       - smart-contract-verifier
       - redis_db
+      - geth-rpc-endpoint
     image: blockscout/blockscout:4.1.8
     restart: always
     container_name: 'blockscout'
