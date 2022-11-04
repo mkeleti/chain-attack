@@ -26,14 +26,7 @@ services:
       #   --syncmode "full"
       #--ipcdisable
       #--maxpeers 3
-      --networkid=314159
-      --allow-insecure-unlock
-      --netrestrict="255.255.255.248/28"
-      --ws
-      --ws.origins '*' 
-      --ws.port 8923
-      --ws.addr 0.0.0.0
-      --ws.api "admin,debug,web3,eth,txpool,personal,clique,miner,net" 
+     --allow-insecure-unlock 
      --nodekey /root/bootnode.txt
      --config /root/bootnode.toml
     networks:
@@ -92,6 +85,7 @@ services:
       - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/devchain/keystore:rw
       - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/keystore:rw
       - ./blockchain-docker/config/rpc.txt:/root/rpc.txt:ro
+      - ./blockchain-docker/blockchain-data/preload.js:/root/.ethereum/preload.js:ro
   geth-signer:
     hostname: geth-signer
     container_name: Miner-Node
@@ -111,7 +105,6 @@ services:
       --password /root/.ethereum/password.txt
       --networkid=314159
       --netrestrict="255.255.255.248/28"
-      --ipcdisable
       --port 30305
       --nat extip:"255.255.255.244"
     networks:
@@ -121,6 +114,7 @@ services:
       - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/keystore:rw
       - ./blockchain-docker/blockchain-data/password.txt:/root/.ethereum/password.txt:ro
       - ./blockchain-docker/config/miner.txt:/root/miner.txt:ro
+      - ./blockchain-docker/blockchain-data/preload.js:/root/.ethereum/preload.js:ro
     ports:
     - "30305:30305"
     - "30305:30305/udp"
