@@ -85,11 +85,11 @@ services:
       - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/devchain/keystore:rw
       - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/keystore:rw
       - ./blockchain-docker/config/rpc.txt:/root/rpc.txt:ro
-      - ./blockchain-docker/blockchain-data/preload.js:/root/.ethereum/preload.js:ro
+      - ./blockchain-docker/blockchain-data/preload.js:/root/preload.js:ro
+      - ./blockchain-docker/blockchain-data/backups:/root/backups
   geth-signer:
     hostname: geth-signer
     container_name: Miner-Node
-    restart: on-failure
     env_file:
       - blockchain-docker/config/.env
     build: blockchain-docker/geth-node
@@ -115,13 +115,14 @@ services:
       - ./blockchain-docker/blockchain-data/password.txt:/root/.ethereum/password.txt:ro
       - ./blockchain-docker/config/miner.txt:/root/miner.txt:ro
       - ./blockchain-docker/blockchain-data/preload.js:/root/.ethereum/preload.js:ro
+      - ./blockchain-docker/blockchain-data/preload.js:/root/preload.js:ro
+      - ./blockchain-docker/blockchain-data/backups:/root/backups
     ports:
     - "30305:30305"
     - "30305:30305/udp"
   geth-signer-2:
     hostname: geth-signer2
     container_name: Miner-Node-2
-    restart: on-failure
     env_file:
       - blockchain-docker/config/.env
     build: blockchain-docker/geth-node
@@ -139,7 +140,6 @@ services:
       --password /root/.ethereum/password.txt
       --networkid=314159
       --netrestrict="255.255.255.248/28"
-      --ipcdisable
       --port 30306
       --nat extip:"255.255.255.245"
     ports:
@@ -152,6 +152,8 @@ services:
       - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/keystore:rw
       - ./blockchain-docker/blockchain-data/password.txt:/root/.ethereum/password.txt:ro
       - ./blockchain-docker/config/miner.txt:/root/miner.txt:ro
+      - ./blockchain-docker/blockchain-data/preload.js:/root/preload.js:ro
+      - ./blockchain-docker/blockchain-data/backups:/root/backups
 
 # Dashboard container
 
