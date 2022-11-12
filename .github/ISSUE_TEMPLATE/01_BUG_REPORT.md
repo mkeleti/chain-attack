@@ -1,9 +1,10 @@
 ---
 name: Bug Report
 about: Create a report to help Ethereum Attack Simulator to improve
-title: "bug: "
-labels: "bug"
-assignees: ""
+title: 'bug: '
+labels: bug, question
+assignees: ''
+
 ---
 
 # Bug Report
