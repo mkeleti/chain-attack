@@ -17,6 +17,9 @@
 
 This provides a docker container where you can observe a ethereum chain in action.
 
+![Screenshot1](docs/screenshot1.png)
+![Screenshot2](docs/screenshot3.png)
+
 ### Built With
 
 Docker, GETH, Nodejs, Nextjs, and Blockscout
@@ -25,27 +28,25 @@ Docker, GETH, Nodejs, Nextjs, and Blockscout
 
 1. Clone the repo
 2. Change your directory to the cloned repo
-3. Run docker-compose up -d
-4. Go to localhost:4000 for blockscout and localhost:3000 for attacking dashboard.
+3. Start the Docker Engine.
+4. Run the command `./start.sh`\*
+
+\*If that doesnt work then run `chmod 755 start.sh`
+
 ### Prerequisites
 
-
-Install docker on your computer
-Install docker-compose on your computer if necessary*
+- Docker
+- Python
 
 ### Installation
 
-> **[?]**
-> git clone to a local directory
-> **[?]**
-> cd /path/to/directory/
-> **[?]**
-> run docker-compose up -d
+If you would like to edit the dashboard make sure to run `yarn install` within the chain dashboard directory.
 
 ## Usage
 
-> **[?]**
-> navigate to localhost:3000 to view the chain
+`./start.sh` does everything for you.
+
+As we add more to the Dashboard and connect it more with the blockchain, I will update this section.
 
 ## Roadmap
 
@@ -56,9 +57,6 @@ See the [open issues](https://github.com/mkeleti/ethchain-app/issues) for a list
 - [Newest Bugs](https://github.com/mkeleti/ethchain-app/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
 
 ## Support
-
-> **[?]**
-> Provide additional ways to contact the project maintainer/maintainers.
 
 Reach out to the maintainer at one of the following places:
 
@@ -97,11 +95,6 @@ See [LICENSE](LICENSE) for more information.
 
 ## Acknowledgements
 
-> **[?]**
-> eth-netstats
-> **[?]**
-> epirus blockchain dashboard
-> **[?]**
-> ethereum
-> **[?]**
-> ethereum-docker
+- **KU Blockchain Institute**
+- **Spencer Museum**
+- **Ethereum**
