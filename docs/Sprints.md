@@ -70,13 +70,18 @@ As a general goal, we will want the website to have complete control over these 
 ## Sprint 4 Visualize Blockchain
 
 If we have leftover time, we can work on implementing a visualization for our blockchain. This will help the artists greatly as they formulate what the final exhibition will look like. Here is a general mockup of what I hope the visualization to look like:
-
-![IMG_7BDE0056E2FC-1.jpeg](IMG_7BDE0056E2FC-1.jpeg)
+<div>
+<br>
+<img src="IMG_7BDE0056E2FC-1.jpeg" alt="first visual" width="50%">
+</div>							     
 
 
 Then once the blockchain has been forked, the visualization will update to show two chains:
-
-![IMG_30E1A3F41AB6-1.jpeg](IMG_30E1A3F41AB6-1.jpeg)
+							     
+<div>
+<br>
+<img src="IMG_30E1A3F41AB6-1.jpeg" alt="second visual" width="50%">
+ </div>	
 
 The third visualization will be a merged blockchain. The two networks will merge which means the number of nodes will increase, however there will only be one blockchain.
 
