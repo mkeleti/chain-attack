@@ -15,7 +15,7 @@
 ---
 ## About
 
-This provides a docker container where you can observe a ethereum chain in action.
+This an environment where you can observe a ethereum chain in action.
 
 ![Screenshot1](docs/screenshot1.png)
 ![Screenshot2](docs/screenshot3.png)
