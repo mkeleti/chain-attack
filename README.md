@@ -95,6 +95,6 @@ See [LICENSE](LICENSE) for more information.
 
 ## Acknowledgements
 
-- **KU Blockchain Institute**
-- **Spencer Museum**
+- **[KU Blockchain Institute](https://kublockchain.com)**
+- **[Spencer Museum](https://kublockchain.com)**
 - **Ethereum**
