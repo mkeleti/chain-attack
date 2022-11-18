@@ -35,8 +35,10 @@ Docker, GETH, Nodejs, Nextjs, and Blockscout
 
 ### Prerequisites
 
-- Docker
-- Python
+- [Docker](https://www.docker.com)
+- [Python](https://www.python.org)
+- [node](https://nodejs.org/en/)
+- [yarn](https://yarnpkg.com)
 
 ### Installation
 
