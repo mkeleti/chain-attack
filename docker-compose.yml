@@ -6,7 +6,7 @@ networks:
     driver: bridge
     ipam:
       config:
-      - subnet: 255.255.255.248/28
+      - subnet: 255.255.255.248/27
 
 # If running Intel/AMD change linux/arm64 to linux/amd64
 services:
@@ -16,7 +16,7 @@ services:
     restart: on-failure
     env_file:
       - blockchain-docker/config/.env
-    build: blockchain-docker/geth-node
+    build: blockchain-docker
     platform: linux/arm64
     command:
       # --networkid=314159
@@ -48,7 +48,7 @@ services:
     restart: on-failure
     env_file:
       - blockchain-docker/config/.env
-    build: blockchain-docker/geth-node
+    build: blockchain-docker
     platform: linux/arm64
     depends_on:
       - geth-bootnode    
@@ -92,7 +92,7 @@ services:
     container_name: Miner-Node
     env_file:
       - blockchain-docker/config/.env
-    build: blockchain-docker/geth-node
+    build: blockchain-docker
     platform: linux/arm64
     depends_on:
       - geth-bootnode
@@ -125,7 +125,7 @@ services:
     container_name: Miner-Node-2
     env_file:
       - blockchain-docker/config/.env
-    build: blockchain-docker/geth-node
+    build: blockchain-docker
     platform: linux/arm64
     depends_on:
       - geth-bootnode
@@ -154,6 +154,7 @@ services:
       - ./blockchain-docker/config/miner.txt:/root/miner.txt:ro
       - ./blockchain-docker/blockchain-data/preload.js:/root/preload.js:ro
       - ./blockchain-docker/blockchain-data/backups:/root/backups
+    
 
 # Dashboard container
 
@@ -165,6 +166,8 @@ services:
     build: ChainDashboard
     ports:
       - "3000:3000"
+    networks:
+        - priv-eth-net
 
 
 # Blockscout
@@ -176,6 +179,8 @@ services:
       - 6379:6379
     container_name: redis_db
     command: redis-server
+    networks:
+    - priv-eth-net
    # volumes:
    #   - ./redis-data:/data
 
@@ -191,6 +196,8 @@ services:
     #  - ./postgres-data:/var/lib/postgresql/data
     ports:
       - 7432:5432
+    networks:
+    - priv-eth-net
 
   blockscout:
     depends_on:
@@ -208,6 +215,8 @@ services:
       - 'host.docker.internal:host-gateway'
     env_file:
       -  ./envs/common-blockscout.env
+    networks:
+        - priv-eth-net
     environment:
         ETHEREUM_JSONRPC_VARIANT: 'geth'
         BLOCK_TRANSFORMER: 'clique'
@@ -217,8 +226,8 @@ services:
         SECRET_KEY_BASE: '56NtB48ear7+wMSf0IQuWDAAazhpb31qyc7GiyspBP2vh7t5zlCsF5QDv76chXeN'
     ports:
       - 4000:4000
-   # volumes:
-   #   - ./logs/:/app/logs/
+    # volumes:
+#   - ./logs/:/app/logs/
 
   smart-contract-verifier:
     image: ghcr.io/blockscout/smart-contract-verifier:${SMART_CONTRACT_VERIFIER_DOCKER_TAG:-latest}
@@ -228,3 +237,5 @@ services:
       -  ./envs/common-smart-contract-verifier.env
     ports:
       - 8043:8043
+    networks:
+    - priv-eth-net

@@ -16,11 +16,11 @@ if [ -x "$(command -v docker)" ]; then
     docker compose restart geth-signer-2
     echo "Done! You can access the website at http://127.0.0.1:3000"
     # ./injectRpcArgs.sh # 51 Attack
-    cd ChainDashboard
+    cd ChainDashboard || exit
+    yarn global add pm2
     yarn transact
-    read -p "Press Enter to stop the containers" </dev/tty
+    read -p "Press Enter to continue" </dev/tty
     yarn untransact
-    cd ..
     docker compose down
     echo "Goodbye!"
 else
