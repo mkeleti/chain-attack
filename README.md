@@ -15,14 +15,14 @@
 ---
 ## About
 
-This an environment where you can observe a ethereum chain in action.
+Full stack web application that simulates an attack on the ethereum blockchain.
 
 ![Screenshot1](docs/screenshot1.png)
 ![Screenshot2](docs/screenshot3.png)
 
 ### Built With
 
-Docker, Geth, Nodejs, Nextjs, and Blockscout
+Docker, Ethereum Geth Client, Nextjs, and Blockscout
 
 ## Getting Started
 
