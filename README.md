@@ -15,7 +15,7 @@
 ---
 ## About
 
-This provides a docker container where you can observe a ethereum chain in action.
+This an environment where you can observe a ethereum chain in action.
 
 ![Screenshot1](docs/screenshot1.png)
 ![Screenshot2](docs/screenshot3.png)
@@ -35,8 +35,10 @@ Docker, GETH, Nodejs, Nextjs, and Blockscout
 
 ### Prerequisites
 
-- Docker
-- Python
+- [Docker](https://www.docker.com)
+- [Python](https://www.python.org)
+- [node](https://nodejs.org/en/)
+- [yarn](https://yarnpkg.com)
 
 ### Installation
 
@@ -95,6 +97,6 @@ See [LICENSE](LICENSE) for more information.
 
 ## Acknowledgements
 
-- **KU Blockchain Institute**
-- **Spencer Museum**
+- **[KU Blockchain Institute](https://kublockchain.com)**
+- **[Spencer Museum](https://spencerart.ku.edu)**
 - **Ethereum**
