@@ -1,6 +1,7 @@
 
 <div align="center">
-  Ethereum Attack Simulator
+  <h1>Ethereum Attack Simulator</h1>
+  <b>Please go to the <a href="https://github.com/mkeleti/docker-eth-attack/wiki">Wiki</a> if you are new to this repository and would like to know more</b>
   <br />
   <a href="#about"><strong>Explore the screenshots »</strong></a>
   <br />
@@ -13,6 +14,7 @@
 </div>
 
 ---
+
 ## About
 
 Full stack web application that simulates an attack on the ethereum blockchain.
