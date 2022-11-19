@@ -11,6 +11,7 @@ type ButtonProps = {
   title: string;
 };
 
+// Button used for Next.js routing
 const NextButton = (props: ButtonProps) => (
         <Link href={props.href} passHref>
             <Button component="a" color={props.color} size={props.size}>{props.title}</Button>
