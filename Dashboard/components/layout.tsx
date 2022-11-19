@@ -17,7 +17,7 @@ const links = [{ link: '/', label: 'Visualizer' },
 interface Props {
   children: React.ReactNode;
 }
-
+ // Configures the layout of the web application
 const Layout: React.FC<Props> = ({ children }) => {
   const theme = useMantineTheme();
 
