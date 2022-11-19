@@ -13,6 +13,7 @@ const Blockscout: NextPage = () => {
       </Head>
       <main>
         <Box mt={60}>
+          {/* iFrame containing Blockscout */}
         <Iframe
           url="http://localhost:4000"
           width="100%"
