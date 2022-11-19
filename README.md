@@ -39,6 +39,7 @@ Docker, GETH, Nodejs, Nextjs, and Blockscout
 - [Python](https://www.python.org)
 - [node](https://nodejs.org/en/)
 - [yarn](https://yarnpkg.com)
+- [pm2](https://pm2.io/docs/runtime/guide/installation/)
 
 ### Installation
 
