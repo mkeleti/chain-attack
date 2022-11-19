@@ -1,23 +1,26 @@
 
+
 version: '3.8'
 
 networks:
+# Define the network for the containers
   priv-eth-net:
     driver: bridge
+    # Set container to connect to the host through a bridge to localhost
     ipam:
       config:
+      # Define the subnet for the network which allows limiting maximum capacity
       - subnet: 255.255.255.248/27
 
 # If running Intel/AMD change linux/arm64 to linux/amd64
 services:
-  geth-bootnode:
+  geth-bootnode: # Boots the blockchain
     hostname: geth-bootnode
     container_name: bootNode
     restart: on-failure
     env_file:
       - blockchain-docker/config/.env
     build: blockchain-docker
-    platform: linux/arm64
     command:
       # --networkid=314159
       #      --netrestrict "255.255.255.248/28"
@@ -42,14 +45,14 @@ services:
       - "30301:30301/udp"
       - "8923:8923"
 
-  geth-rpc-endpoint:
+  geth-rpc-endpoint: # Interacts with the frontend (API Gateway)
     hostname: geth-rpc-endpoint
     container_name: rpcNode
     restart: on-failure
     env_file:
       - blockchain-docker/config/.env
     build: blockchain-docker
-    platform: linux/arm64
+
     depends_on:
       - geth-bootnode    
     command: 
@@ -87,13 +90,12 @@ services:
       - ./blockchain-docker/config/rpc.txt:/root/rpc.txt:ro
       - ./blockchain-docker/blockchain-data/preload.js:/root/preload.js:ro
       - ./blockchain-docker/blockchain-data/backups:/root/backups
-  geth-signer:
+  geth-signer: # Signs/Mines transactions
     hostname: geth-signer
     container_name: minerNode
     env_file:
       - blockchain-docker/config/.env
     build: blockchain-docker
-    platform: linux/arm64
     depends_on:
       - geth-bootnode
       - geth-rpc-endpoint
@@ -120,13 +122,12 @@ services:
     ports:
     - "30305:30305"
     - "30305:30305/udp"
-  geth-signer-2:
+  geth-signer-2: # Signs/Mines Transactions
     hostname: geth-signer2
     container_name: minerNode2
     env_file:
       - blockchain-docker/config/.env
     build: blockchain-docker
-    platform: linux/arm64
     depends_on:
       - geth-bootnode
       - geth-rpc-endpoint
@@ -154,10 +155,6 @@ services:
       - ./blockchain-docker/config/miner.txt:/root/miner.txt:ro
       - ./blockchain-docker/blockchain-data/preload.js:/root/preload.js:ro
       - ./blockchain-docker/blockchain-data/backups:/root/backups
-    
-
-# Dashboard container
-
 
 
 

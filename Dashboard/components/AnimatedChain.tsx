@@ -1,3 +1,5 @@
+// Some of this file is a work in progress, and is not currently used in the project. - mk nov-19
+
 import { useEffect, useRef } from "react";
 import { Box } from "@mantine/core";
 import {
@@ -23,19 +25,19 @@ interface PropTypes {
 }
 
 
-// Component Declaration for Next.js
+// This a monolithic component that contains the entire chain animation
 const ChainAnime = (props: PropTypes) => {
-  const scene = useRef();
+  const scene = useRef(); // Reference to the scene
   const engine = useRef(Engine.create()).current; // create an engine
   const world = engine.world; // create a world
 
-
+  // Create a new renderer
   useEffect(() => {
-    const cw = document.body.clientWidth;
-    const ch = document.body.clientHeight;
+    const cw = document.body.clientWidth; // Get the width of the screen
+    const ch = document.body.clientHeight; // Get the height of the screen
     // create a renderer
-    use('matter-attractors');
-    const render = Render.create({
+    use('matter-attractors'); // Use the matter-attractors plugin (for gravity)
+    const render = Render.create({ // Create a new renderer
       element: scene.current,
       engine: engine,
       options: {
@@ -46,18 +48,18 @@ const ChainAnime = (props: PropTypes) => {
         background: "light",
       },
     });
-    Render.run(render);
+    Render.run(render); // Run the renderer
 
     // create runner
 /* Creating a runner, which is a loop that runs the engine. */
-    const runner = Runner.create();
+    const runner = Runner.create(); // Create a new runner
 
-    Runner.run(runner, engine);
+    Runner.run(runner, engine); // Run the runner
 
-    let block = Bodies.rectangle(500, 400, 70, 50, {
-      render: { fillStyle: "lightblue", }, isStatic: true, plugin: {
-        attractors: [
-          function(bodyA: Body, bodyB: Body) {
+    let block = Bodies.rectangle(500, 400, 70, 50, { // Create a new block
+      render: { fillStyle: "lightblue", }, isStatic: true, plugin: { // Set the plugin to use the matter-attractors plugin
+        attractors: [ // Set the attractors
+          function(bodyA: Body, bodyB: Body) { // Create a function that takes in two bodies
             return {
               x: (bodyA.position.x - bodyB.position.x) * 1e-6,
               y: (bodyA.position.y - bodyB.position.y) * 1e-6,
@@ -65,15 +67,15 @@ const ChainAnime = (props: PropTypes) => {
           }
         ]
     }});
+    Composite.add(world, block); // Add the block to the world
 
-
-    Composite.add(world, block);
-
-
-    for (let int = 0; int < props.hashes.length - 1; int++) {
-      if (int != 0) {
-      let block = Bodies.rectangle(500, 400 + int * 100, 70, 50, {
-        render: { fillStyle: "lightblue" }, isStatic: true, plugin: {
+    // loop through the hashes and create a new block for each hash
+    for (let int = 0; int < props.hashes.length - 1; int++) { 
+      // Create a new block
+      if (int != 0) { 
+        // If the index is not 0
+      let block = Bodies.rectangle(500, 400 + int * 100, 70, 50, { // Create a new block
+        render: { fillStyle: "lightblue" }, isStatic: true, plugin: { // Set the plugin to use the matter-attractors plugin
           attractors: [
             function(bodyA: Body, bodyB: Body) {
               return {
@@ -128,6 +130,7 @@ const ChainAnime = (props: PropTypes) => {
     };
   }, []);
 
+  // Render the chain animation
   return (
     <Box mt={60}>
       <div ref={scene} style={{ width: "100%", height: "100%" }} />

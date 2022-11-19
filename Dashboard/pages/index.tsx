@@ -38,7 +38,7 @@ const Home: NextPage = () => {
       <main>
         <Box mt={60}>
         <Center>
-          {" "}
+          {/* Chain Animation with hashes and nodes as props */}
           <AnimeChain hashes={blocknumber} nodes={nodes} />
         </Center>
         </Box>

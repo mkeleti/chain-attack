@@ -1,5 +1,8 @@
 # Import ethereum
 FROM --platform=$BUILDPLATFORM ethereum/client-go:alltools-v1.10.1
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM" > /log
 # Accept account password as arg
 ARG ACCOUNT_PASSWORD
 # Copy genesis.json to /tmp
