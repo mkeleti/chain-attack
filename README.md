@@ -19,7 +19,7 @@
 
 Full stack web application that simulates an attack on the ethereum blockchain.
 
-Read [Majority_attack](https://en.bitcoin.it/wiki/Majority_attack) to learn more.
+Read [Majority attack](https://en.bitcoin.it/wiki/Majority_attack) to learn more.
 
 ![Screenshot1](docs/screenshot1.png)
 ![Screenshot2](docs/screenshot3.png)
