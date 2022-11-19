@@ -22,7 +22,7 @@ This an environment where you can observe a ethereum chain in action.
 
 ### Built With
 
-Docker, GETH, Nodejs, Nextjs, and Blockscout
+Docker, Geth, Nodejs, Nextjs, and Blockscout
 
 ## Getting Started
 
