@@ -2,7 +2,6 @@
 if [ -x "$(command -v docker)" ]; then
     echo "Updating git repo"
     git pull
-    git submodule update
     echo "Stopping any currently running containers"
     docker compose down
     echo "Building containers"
@@ -16,8 +15,9 @@ if [ -x "$(command -v docker)" ]; then
     docker compose restart geth-signer-2
     echo "Done! You can access the website at http://127.0.0.1:3000"
     # ./injectRpcArgs.sh # 51 Attack
-    cd ChainDashboard || exit
+    cd Dashboard || exit
     yarn global add pm2
+    yarn install
     yarn transact
     read -p "Press Enter to continue" </dev/tty
     yarn untransact

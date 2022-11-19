@@ -163,7 +163,7 @@ services:
     depends_on:
       - geth-bootnode
     container_name: Dashboard
-    build: ChainDashboard
+    build: Dashboard
     ports:
       - "3000:3000"
     networks:
