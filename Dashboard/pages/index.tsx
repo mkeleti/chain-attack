@@ -1,9 +1,24 @@
 import type { NextPage } from "next";
 import { useState } from "react";
 import Head from "next/head";
-import AnimeChain from "../components/AnimatedChain";
+import AnimeChain from "../components/animatedChain";
 import { Box, Center } from "@mantine/core";
-import Script from "next/script";
+import web3 from '../web3/web3Provider';
+import { BlockHeader } from "web3-eth";
+
+
+// Here is a subscription object. Look here for documentation: https://web3js.readthedocs.io/en/v1.8.1/web3-eth-subscribe.html#eth-subscribe
+
+const Subscription = web3.eth.subscribe('newBlockHeaders', (error, result: BlockHeader) => {
+  if (!error) {
+    console.log(result); //result.blockNumber for block number
+  }
+  else 
+  {
+    console.log(error);
+  }
+});
+
 
 const Home: NextPage = () => {
   const [nodes, setNodes] = useState([
