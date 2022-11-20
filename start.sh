@@ -18,10 +18,10 @@ if [ -x "$(command -v docker)" ]; then
     docker compose build
     echo "Starting Docker Containers"
     docker compose up -d
-    echo "Pausing & Unpausing miners for correct sync"
-    sleep 10
-    docker compose restart geth-signer-2
-    echo "Done! You can access the website at http://127.0.0.1:3000"
+    # echo "Pausing & Unpausing miners for correct sync"
+    # sleep 10
+    # docker compose restart geth-signer-2
+    # echo "Done! You can access the website at http://127.0.0.1:3000"
     # ./injectRpcArgs.sh # 51 Attack
     cd Dashboard || exit
     yarn global add pm2

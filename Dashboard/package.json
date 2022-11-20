@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "transact": "pm2 start ./utils/Simulate.ts --interpreter ./node_modules/.bin/ts-node-esm",
-    "untransact": "pm2 stop ./utils/Simulate.ts"
+    "transact": "pm2 start ./web3/Simulate.ts --interpreter ./node_modules/.bin/ts-node-esm",
+    "untransact": "pm2 stop ./web3/Simulate.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
