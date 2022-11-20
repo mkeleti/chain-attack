@@ -28,10 +28,11 @@ if [ -x "$(command -v docker)" ]; then
     echo "Make sure to install pm2 with your package manager if you get errors after this message."
     yarn install
     yarn transact
-    yarn build
+    # yarn build
     echo "Opening website, press CTRL+C to stop"
     trap trap_ctrlc INT
-    yarn start
+    # yarn start
+    yarn dev
 else
     echo "Install docker to run: https://www.docker.com"
 fi

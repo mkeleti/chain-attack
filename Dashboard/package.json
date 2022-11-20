@@ -35,6 +35,7 @@
     "web3": "^1.8.0"
   },
   "devDependencies": {
+    "@types/dockerode": "^3.3.14",
     "@types/matter-js": "^0.18.2",
     "@types/node": "18.11.4",
     "@types/p5": "^1.4.3",
