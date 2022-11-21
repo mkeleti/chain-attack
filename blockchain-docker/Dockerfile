@@ -19,11 +19,9 @@ COPY blockchain-data/keystore /.ethereum/keystore
 # Copy the preload.js file to the geth docker container
 COPY blockchain-data/preload.js /root/preload.js
 # Copy the backup directory to the geth docker container
-RUN --mount=type=bind,source="blockchain-data/backups",target="/root/backups"
+# RUN --mount=type=bind,source="blockchain-data/backups",target="/root/backups"
 # Copy bootnode.txt to the geth docker container
 COPY config/bootnode.txt /root/bootnode.txt
-# Copy bootnode address to the geth docker container
-COPY config/bootnodeaddress.txt /root/bootnodeaddress.txt
 # bootnode config being imported into container
 COPY config/bootnode.toml /root/bootnode.toml
 
