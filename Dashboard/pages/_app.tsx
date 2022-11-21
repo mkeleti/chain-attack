@@ -5,7 +5,7 @@ import { MantineProvider } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
 import Layout from "../components/layout";
 import Script from "next/script";
-import Simulate from "../web3/Simulate";
+import Simulate from "../utils/web3/Simulate";
 // Simulate();
 
 export default function App(props: AppProps) {

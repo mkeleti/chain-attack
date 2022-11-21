@@ -24,7 +24,7 @@
     "matter-attractors": "^0.1.6",
     "matter-js": "^0.18.0",
     "mongodb": "^4.11.0",
-    "next": "12.3.1",
+    "next": "^13.0.0",
     "pm2": "^5.2.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
