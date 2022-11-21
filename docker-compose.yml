@@ -37,7 +37,6 @@ services:
     volumes:
       - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/devchain/keystore:rw
       - ./blockchain-docker/config/bootnode.txt:/root/bootnode.txt:ro
-      - ./blockchain-docker/config/bootnodeaddress.txt:/root/bootnodeaddress.txt:ro
       - ./blockchain-docker/config/bootnode.toml:/root/bootnode.toml:ro
     ports:
       - "30301:30301"
