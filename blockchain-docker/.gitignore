@@ -1,1 +1,4 @@
-blockchain-data/backups
+blockchain-data/backups/*
+
+!blockchain-data/backups/*.md
+
