@@ -13,19 +13,6 @@ export const Blockchain = ({ nodes }: PropTypes) => {
 
   useEffect(() => {
     Subscription.on("data", (data) => {
-      const style = {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#F3D2C1",
-        width: 110,
-        height: 85,
-        borderRadius: 5,
-        borderWidth: 2,
-        borderColor: "#000000",
-        borderStyle: "solid",
-      };
-
       const block = (
         <div style={{ display: "flex", flexDirection: "column" }}>
           {index > 0 && (
@@ -40,9 +27,6 @@ export const Blockchain = ({ nodes }: PropTypes) => {
               ></line>
             </svg>
           )}
-          {/* <div className="jello" style={style} key={data.hash}>
-            <span style={{ fontWeight: "bold" }}>{data.number}</span>
-          </div> */}
           <Block key={data.hash} data={data}></Block>
         </div>
       );
