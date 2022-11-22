@@ -31,7 +31,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Box>
+        <Box sx={{ padding: 15 }}>
           <Center>
             {/* Chain Animation with hashes and nodes as props */}
             <Blockchain hashes={blocknumber} nodes={nodes} />
