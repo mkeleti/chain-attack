@@ -10,7 +10,7 @@ const Blockscout: NextPage = () => {
         <title>Blockscout</title>
       </Head>
       <main>
-        <Box mt={60}>
+        <Box>
           <Iframe
             url="http://localhost:4000"
             width="100%"
@@ -20,6 +20,7 @@ const Blockscout: NextPage = () => {
             className="Blockscout"
             display="block"
             position="relative"
+            frameBorder={0}
           />
         </Box>
       </main>
