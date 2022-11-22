@@ -1,20 +1,18 @@
 import {
-  Anchor,
-  Avatar,
   Box,
   Group,
   HoverCard,
-  Stack,
   Text,
 } from "@mantine/core";
 import type { FC } from "react";
+import { BlockHeader } from "web3-eth";
 
-type Props = {
-  data: any;
-};
+interface propTypes {
+  data: BlockHeader
+}
 
-const Block: FC<any> = ({ data }) => {
-  console.log({ data });
+const Block: FC<any> = ( props: propTypes ) => {
+  console.log(props.data);
   return (
     <HoverCard>
       <HoverCard.Target>
@@ -34,20 +32,23 @@ const Block: FC<any> = ({ data }) => {
               "0 1px 3px rgba(0, 0, 0, 0.05),rgba(0, 0, 0, 0.05) 0px 20px 25px -5px,rgba(0, 0, 0, 0.04) 0px 10px 10px -5px",
           }}
         >
-          {data.number}
+          {props.data.number}
         </Box>
       </HoverCard.Target>
       <HoverCard.Dropdown>
         <Group>
           <Text size="sm" weight="bold">
-            Blockscout
+            Block #{props.data.number}
           </Text>
         </Group>
         <Text size="xs" mt="md" color="">
-          <b>Hash:</b> {data.hash}
+          <b>Hash:</b> {props.data.hash}
         </Text>
         <Text size="xs" mt="md" color="">
-          <b>Time:</b> {formatTime(data.timestamp)}
+          <b>Time:</b> {formatTime(props.data.timestamp)}
+        </Text>
+        <Text size="xs" mt="md" color="">
+          <b>Gas Used:</b> {props.data.gasUsed}
         </Text>
       </HoverCard.Dropdown>
     </HoverCard>
