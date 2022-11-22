@@ -28,9 +28,8 @@ export const BaseLayout: FC<Props> = ({ children }) => {
               <Menu.Item>Blockscout</Menu.Item>
             </Link>
             <Menu.Divider />
-            <Menu.Item color="red">Attack</Menu.Item>
             <Link href="/attack">
-              <Menu.Item>Attack</Menu.Item>
+              <Menu.Item color="red">Attack</Menu.Item>
             </Link>
           </Menu.Dropdown>
         </Menu>
