@@ -13,3 +13,5 @@ export const BaseLayout: FC<Props> = ({ children }) => {
     </AppShell>
   );
 };
+
+export default BaseLayout;

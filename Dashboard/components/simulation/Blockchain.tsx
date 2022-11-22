@@ -4,10 +4,10 @@ import { Subscription } from "../../web3/newHeads";
 import Block from "./elements/Block";
 
 interface PropTypes {
-  hashes: string[];
-  nodes: string[];
+  hashes?: string[];
+  nodes?: string[];
 }
-export const Blockchain = ({ nodes }: PropTypes) => {
+export const Blockchain = (nodes: PropTypes) => {
   const [blocks, setBlocks] = useState([]);
   const [index, setIndex] = useState(0);
 
@@ -39,3 +39,5 @@ export const Blockchain = ({ nodes }: PropTypes) => {
 
   return <Box>{blocks}</Box>;
 };
+
+export default Blockchain;
