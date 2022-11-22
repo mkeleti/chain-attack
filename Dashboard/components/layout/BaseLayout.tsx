@@ -8,7 +8,7 @@ interface Props {
 
 export const BaseLayout: FC<Props> = ({ children }) => {
   return (
-    <AppShell header={<Header />}>
+    <AppShell styles={{ main: { padding: 0 } }} header={<Header />}>
       <main>{children}</main>
     </AppShell>
   );
