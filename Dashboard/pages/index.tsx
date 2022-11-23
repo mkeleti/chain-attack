@@ -1,23 +1,8 @@
-import type { NextPage } from "next";
-import { useState } from "react";
-import Head from "next/head";
-import AnimeChain from "../components/animatedChain";
 import { Box, Center } from "@mantine/core";
-import web3 from '../web3/web3Provider';
-import { BlockHeader } from "web3-eth";
-
-
-// Here is a subscription object. Look here for documentation: https://web3js.readthedocs.io/en/v1.8.1/web3-eth-subscribe.html#eth-subscribe
-
-const Subscription = web3.eth.subscribe('newBlockHeaders', (error, result: BlockHeader) => {
-  if (!error) {
-    console.log(result); //result.blockNumber for block number
-  }
-  else 
-  {
-    console.log(error);
-  }
-});
+import type { NextPage } from "next";
+import Head from "next/head";
+import { useState } from "react";
+import { Blockchain } from "../components";
 
 
 const Home: NextPage = () => {
@@ -36,13 +21,6 @@ const Home: NextPage = () => {
   ]);
   const [blocknumber, setBlocknumber] = useState([]);
 
-  //let subscription = web3.eth.subscribe(
-  //  "newBlockHeaders",
-   // function (error, results) {
-    //  console.log(results);
-  //  }
- // );
-
   return (
     <div>
       <Head>
@@ -51,11 +29,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Box mt={60}>
-        <Center>
-          {/* Chain Animation with hashes and nodes as props */}
-          <AnimeChain hashes={blocknumber} nodes={nodes} />
-        </Center>
+        <Box sx={{ padding: 15 }}>
+          <Center>
+            {/* Chain Animation with hashes and nodes as props */}
+            <Blockchain />
+          </Center>
         </Box>
       </main>
     </div>
