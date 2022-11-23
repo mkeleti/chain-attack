@@ -5,11 +5,11 @@ import Block from "./elements/Block";
 import Node from "./elements/Node";
 
 interface PropTypes {
-  hashes: string[];
-  nodes: string[];
+  hashes?: string[];
+  nodes?: string[];
 }
 
-export const Blockchain = ({ nodes }: PropTypes) => {
+export const Blockchain = (nodes: PropTypes) => {
   const [blocks, setBlocks] = useState([]);
   const [index, setIndex] = useState(0);
   const nodeArray = [];
@@ -57,3 +57,5 @@ export const Blockchain = ({ nodes }: PropTypes) => {
     </div>
   )
 };
+
+export default Blockchain;

@@ -7,7 +7,7 @@ interface PropTypes {
   hashes: string[];
   nodes: string[];
 }
-const ChainAnime = ({ nodes }: PropTypes) => {
+const ChainAnime = (nodes: PropTypes) => {
   const [blocks, setBlocks] = useState([]);
   const [index, setIndex] = useState(0);
 

@@ -3,9 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import { Blockchain } from "../components";
-import web3 from "../web3/web3Provider";
 
-// Here is a subscription object. Look here for documentation: https://web3js.readthedocs.io/en/v1.8.1/web3-eth-subscribe.html#eth-subscribe
 
 const Home: NextPage = () => {
   const [nodes, setNodes] = useState([
@@ -34,7 +32,7 @@ const Home: NextPage = () => {
         <Box sx={{ padding: 15 }}>
           <Center>
             {/* Chain Animation with hashes and nodes as props */}
-            <Blockchain hashes={blocknumber} nodes={nodes} />
+            <Blockchain />
           </Center>
         </Box>
       </main>
