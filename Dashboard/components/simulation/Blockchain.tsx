@@ -22,8 +22,6 @@ export const Blockchain = (nodes: PropTypes) => {
     console.log("there are ", nodeArray.length, " nodes");
   }  
 
-  
-
   useEffect(() => {
     Subscription.on("data", (data) => {
       const block = (
