@@ -9,11 +9,11 @@ interface PropTypes {
   nodes?: string[];
 }
 
-export const Blockchain = ({nodes}: PropTypes) => {
+export const Blockchain = (nodes: PropTypes) => {
   const [blocks, setBlocks] = useState([]);
   const [index, setIndex] = useState(0);
   const nodeArray = [];
-  const nodeCount = nodes.length;
+  const nodeCount = 11;   //sorry I'm hardcoding this for a sec -emma 11/22
 
   if(index == 0){         // this is supposed to initialize nodes but it actually doesnt work
     for (let i = 0; i < nodeCount; i++) {   
