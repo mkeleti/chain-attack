@@ -9,7 +9,7 @@ interface PropTypes {
   nodes?: string[];
 }
 
-export const Blockchain = (nodes: PropTypes) => {
+export const Blockchain = ({nodes}: PropTypes) => {
   const [blocks, setBlocks] = useState([]);
   const [index, setIndex] = useState(0);
   const nodeArray = [];
