@@ -12,7 +12,7 @@ const Blockscout: NextPage = () => {
       <main>
         <Box>
           <Iframe
-            url="http://localhost:4000"
+            url={process.env.NEXT_PUBLIC_BLKSCT}
             width="100%"
             height="1200px"
             id="Blockscout"
