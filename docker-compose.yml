@@ -74,7 +74,9 @@ services:
       --nat extip:"255.255.255.243"
     ports:
       - "8545:8545"
+      - "8545:8545/udp"
       - "8546:8546"
+      - "8546:8546/udp"
       - "30304:30304"
       - "30304:30304/udp"
     networks:
@@ -254,3 +256,5 @@ services:
     - priv-eth-net
     depends_on:
     - geth-rpc-endpoint
+    ports:
+    - 8000:8000
