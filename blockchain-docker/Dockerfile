@@ -46,4 +46,4 @@ COPY start.sh /root/start.sh
 # RUN chmod 755 /root/start.sh
 
 # Enter file at startscript
-CMD ["geth", "--networkid=314159" ]
+ENTRYPOINT ["geth", "--networkid=314159" ]

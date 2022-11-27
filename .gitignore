@@ -1,6 +1,7 @@
 # database
 postgres-data
 redis-data
+data
 
 # ethereum
 .ethereum
