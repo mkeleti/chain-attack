@@ -21,15 +21,11 @@ COPY blockchain-data/preload.js /root/preload.js
 # Copy the backup directory to the geth docker container
 # RUN --mount=type=bind,source="blockchain-data/backups",target="/root/backups"
 # Copy bootnode.txt to the geth docker container
-COPY config/bootnode.txt /root/bootnode.txt
+COPY config/nodekeys /root/nodekeys
 # bootnode config being imported into container
 COPY config/bootnode.toml /root/bootnode.toml
 
-COPY config/rpc.txt /root/rpc.txt
-
 COPY blockchain-data/password.txt /root/password.txt
-
-COPY config/miner.txt /root/miner.txt
 
 COPY blockchain-data/password.txt /root/.ethereum/password.txt
 # Open port 22 on TCP

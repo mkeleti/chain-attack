@@ -32,7 +32,7 @@ services:
       #--ipcdisable
       #--maxpeers 3
      --allow-insecure-unlock
-     --nodekey /root/bootnode.txt 
+     --nodekey /root/nodekeys/bootnode.txt 
      --config /root/bootnode.toml
     networks:
       priv-eth-net:
@@ -68,7 +68,7 @@ services:
       --syncmode "full"
       --gcmode "archive"
       --txlookuplimit 0 
-      --nodekey=/root/rpc.txt
+      --nodekey=/root/nodekeys/rpc.txt
       --port 30304
       --nat extip:"255.255.255.243"
     ports:
@@ -92,7 +92,7 @@ services:
       - geth-rpc-endpoint
     command:
       --bootnodes "enode://43974299a4c52b220d8eed430a7ed1479f29548041e3ca67ddc1a4886835878c174d45dfd9e73ebd4901e8071c5bb19003f52e4e408e8ec5ce350f8f74a335a8@255.255.255.242:30301, enode://8a9f6e0f6e579e2eda70f8022021ecace552268db2eb6f9cd2fd29aee9d3a2e2c6a622fe6fefa83f41cd5a9fbf85b9b7e7ff696c3df72443b258a0cf51086555@255.255.255.243:30304"
-      --nodekey=/root/miner.txt
+      --nodekey=/root/nodekeys/miner.txt
       --unlock 0x3bcf84dd3ee4c8e3d99bdf37a6ce32a7562c93bf
       --mine
       --password /root/.ethereum/password.txt
@@ -122,6 +122,7 @@ services:
       # Statically connect other nodes
       --bootnodes "enode://43974299a4c52b220d8eed430a7ed1479f29548041e3ca67ddc1a4886835878c174d45dfd9e73ebd4901e8071c5bb19003f52e4e408e8ec5ce350f8f74a335a8@255.255.255.242:30301, enode://32550d2084b947c7dd7500f8f0e2dc47b8ca5cdab07a56c3535c24624767f12bbd37b4e6eca391f406debebede289c7403c675f7c3143243419e82fc39778899@255.255.255.244:30305, enode://8a9f6e0f6e579e2eda70f8022021ecace552268db2eb6f9cd2fd29aee9d3a2e2c6a622fe6fefa83f41cd5a9fbf85b9b7e7ff696c3df72443b258a0cf51086555@255.255.255.243:30304"
       --unlock 0xe1f5c19a40c4cc55dd5b98116a05d342da9064b3
+      --nodekey /root/nodekeys/miner2.txt
       --mine
       --miner.etherbase 0xe1f5c19a40c4cc55dd5b98116a05d342da9064b3
       --password /root/.ethereum/password.txt
@@ -212,6 +213,7 @@ services:
 # Graph Node
   graph-node:
     image: graphprotocol/graph-node
+    container_name: Graph-Node
     ports:
       - '8000:8000'
       - '8001:8001'
@@ -232,6 +234,7 @@ services:
       ethereum: 'attackchain:http://host.docker.internal:8545'
       GRAPH_LOG: info
   ipfs:
+    container_name: IPFS
     image: ipfs/go-ipfs:v0.10.0
     ports:
       - '5001:5001'
@@ -239,6 +242,7 @@ services:
       - ./data/ipfs:/data/ipfs
   postgres:
     image: postgres
+    container_name: Graph-DB
     ports:
       - '5432:5432'
     command:
