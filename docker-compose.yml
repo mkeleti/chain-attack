@@ -252,3 +252,5 @@ services:
     container_name: PM2
     networks:
     - priv-eth-net
+    depends_on:
+    - geth-rpc-endpoint

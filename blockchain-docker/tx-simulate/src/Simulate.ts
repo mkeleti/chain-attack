@@ -17,7 +17,7 @@ async function Transact(): Promise<void> {
       to: accounts[tonum],
       value: txval,
     };
-    web3.eth.personal.unlockAccount(accounts[fromnum], "password", 5000).then(() => web3.eth.sendTransaction(tx));
+    web3.eth.personal.unlockAccount(accounts[fromnum], "password", 5000).then(() => web3.eth.sendTransaction(tx)).catch((reason) => console.log(reason));
     console.log("Transaction sent from " + accounts[fromnum] + " to " + accounts[tonum] + " for " + txval + " ETH");
   });
 }
