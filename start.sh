@@ -20,10 +20,10 @@ if [ -x "$(command -v docker)" ]; then
     echo "Pausing & Unpausing miners for correct sync"
     sleep 10
     docker compose restart geth-signer-2
+    docker compose restart geth-signer-3
     echo "Done! You can access the website at http://127.0.0.1:3000"
     # ./injectRpcArgs.sh # 51 Attack
     cd Dashboard || exit
-    echo "Make sure to install pm2 with your package manager if you get errors after this message."
     yarn install
     # yarn build
     echo "Opening website, press CTRL+C to stop"
