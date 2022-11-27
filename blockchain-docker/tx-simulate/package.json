@@ -4,7 +4,8 @@
   "description": "",
   "main": "Simulate.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "transact": "pm2 start ./src/Simulate.ts --interpreter ./node_modules/.bin/ts-node-esm"
   },
   "keywords": [],
   "author": "",

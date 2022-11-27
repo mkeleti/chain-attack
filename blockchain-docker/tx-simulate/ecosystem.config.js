@@ -2,8 +2,8 @@ module.exports = {
   apps : [{
     name: 'Transactions',
     watch: false,
-    script: 'ts-node',
-    args: '-r tsconfig-paths/register src/Simulate.ts',
+    script: './src/Simulate.ts',
+    interpreter: '/node_modules/.bin/ts-node-esm'
   }],
   env: {
     NODE_ENV: "development",

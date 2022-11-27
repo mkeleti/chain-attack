@@ -211,3 +211,9 @@ services:
     networks:
     - priv-eth-net
 
+  pm2:
+    build: blockchain-docker/tx-simulate
+    restart: always
+    container_name: PM2
+    networks:
+    - priv-eth-net
