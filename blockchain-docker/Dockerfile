@@ -6,16 +6,16 @@ RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM" > /log
 # Accept account password as arg
 ARG ACCOUNT_PASSWORD
 # Copy genesis.json to /tmp
-RUN apk add --update --no-cache openssh docker docker-compose iptables
+RUN apk add --update --no-cache openssh iptables
 RUN echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config
 RUN adduser -h /home/geth -s /bin/sh -D geth
 RUN echo -n 'geth:geth' | chpasswd
 # 
 RUN ssh-agent
 # Copy directory of keys to the geth docker container
-COPY blockchain-data/keystore /.ethereum/devchain/keystore
+COPY blockchain-data/keystore /root/.ethereum/devchain/keystore
 # Copy directory of keys to the geth docker container
-COPY blockchain-data/keystore /.ethereum/keystore
+COPY blockchain-data/keystore /root/.ethereum/keystore
 # Copy the preload.js file to the geth docker container
 COPY blockchain-data/preload.js /root/preload.js
 # Copy the backup directory to the geth docker container
@@ -46,4 +46,4 @@ COPY start.sh /root/start.sh
 # RUN chmod 755 /root/start.sh
 
 # Enter file at startscript
-ENTRYPOINT ["geth"]
+CMD ["geth", "--networkid=314159" ]

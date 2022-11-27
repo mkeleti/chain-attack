@@ -13,6 +13,9 @@ networks:
       - subnet: 255.255.255.248/27
 
 services:
+
+# Ethereum Network
+
   geth-bootnode: # Boots the blockchain
     hostname: geth-bootnode
     container_name: bootNode
@@ -34,14 +37,9 @@ services:
     networks:
       priv-eth-net:
         ipv4_address: "255.255.255.242"
-    volumes:
-      - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/devchain/keystore:rw
-      - ./blockchain-docker/config/bootnode.txt:/root/bootnode.txt:ro
-      - ./blockchain-docker/config/bootnode.toml:/root/bootnode.toml:ro
     ports:
       - "30301:30301"
       - "30301:30301/udp"
-      - "8923:8923"
 
   geth-rpc-endpoint: # Interacts with the frontend (API Gateway)
     hostname: geth-rpc-endpoint
@@ -55,7 +53,6 @@ services:
       - geth-bootnode    
     command: 
       --bootnodes "enode://43974299a4c52b220d8eed430a7ed1479f29548041e3ca67ddc1a4886835878c174d45dfd9e73ebd4901e8071c5bb19003f52e4e408e8ec5ce350f8f74a335a8@255.255.255.242:30301"
-      --networkid=314159
       --allow-insecure-unlock
       --http
       --http.api admin,debug,web3,eth,txpool,personal,clique,miner,net
@@ -83,10 +80,6 @@ services:
       priv-eth-net:
         ipv4_address: "255.255.255.243"
     volumes:
-      - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/devchain/keystore:rw
-      - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/keystore:rw
-      - ./blockchain-docker/config/rpc.txt:/root/rpc.txt:ro
-      - ./blockchain-docker/blockchain-data/preload.js:/root/preload.js:ro
       - ./blockchain-docker/blockchain-data/backups:/root/backups
   geth-signer: # Signs/Mines transactions
     hostname: geth-signer
@@ -103,7 +96,6 @@ services:
       --unlock 0x3bcf84dd3ee4c8e3d99bdf37a6ce32a7562c93bf
       --mine
       --password /root/.ethereum/password.txt
-      --networkid=314159
       --netrestrict="255.255.255.248/28"
       --port 30305
       --nat extip:"255.255.255.244"
@@ -111,11 +103,6 @@ services:
       priv-eth-net:
         ipv4_address: "255.255.255.244"
     volumes:
-      - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/keystore:rw
-      - ./blockchain-docker/blockchain-data/password.txt:/root/.ethereum/password.txt:ro
-      - ./blockchain-docker/config/miner.txt:/root/miner.txt:ro
-      - ./blockchain-docker/blockchain-data/preload.js:/root/.ethereum/preload.js:ro
-      - ./blockchain-docker/blockchain-data/preload.js:/root/preload.js:ro
       - ./blockchain-docker/blockchain-data/backups:/root/backups
     ports:
     - "30305:30305"
@@ -138,7 +125,6 @@ services:
       --mine
       --miner.etherbase 0xe1f5c19a40c4cc55dd5b98116a05d342da9064b3
       --password /root/.ethereum/password.txt
-      --networkid=314159
       --netrestrict="255.255.255.248/28"
       --port 30306
       --nat extip:"255.255.255.245"
@@ -149,10 +135,6 @@ services:
       priv-eth-net:
         ipv4_address: "255.255.255.245"
     volumes:
-      - ./blockchain-docker/blockchain-data/keystore:/root/.ethereum/keystore:rw
-      - ./blockchain-docker/blockchain-data/password.txt:/root/.ethereum/password.txt:ro
-      - ./blockchain-docker/config/miner.txt:/root/miner.txt:ro
-      - ./blockchain-docker/blockchain-data/preload.js:/root/preload.js:ro
       - ./blockchain-docker/blockchain-data/backups:/root/backups
 
 
