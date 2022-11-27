@@ -8,7 +8,7 @@ RUN apk add --no-cache libc6-compat python3 make g++
 WORKDIR /app
 
 # Install pm2 globally
-RUN npm install --global --unsafe-perm pm2
+RUN npm install pm2 -g
 
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
