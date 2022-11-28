@@ -1,7 +1,15 @@
 import { Box, Center, Group } from "@mantine/core";
-import type { NextPage } from "next";
+import type { NextPage, GetServerSideProps } from "next";
 import Head from "next/head";
 import NextButton from "../components/layout/navigation/NextButton";
+import { listAll } from "../app/dockerode";
+
+export async function GetServerSideProps() {
+  const list = listAll();
+  return {
+    list,
+  }
+}
 
 const Attack: NextPage = () => {
   return (
