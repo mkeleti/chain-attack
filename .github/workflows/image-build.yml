@@ -3,7 +3,7 @@ name: Docker Image build & push
 on:
   push:
     branches:
-      - 'main'
+      - 'master'
 
 jobs:
   docker:
@@ -25,5 +25,6 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v3
         with:
+          context: "./blockchain-docker"
           push: true
           tags: mkeleti/geth-attack:latest
