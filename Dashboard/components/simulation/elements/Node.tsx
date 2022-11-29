@@ -1,4 +1,5 @@
 function Node(id: number) {
+
     const style = {
         display: "flex",
         justifyContent: "center",
@@ -11,20 +12,21 @@ function Node(id: number) {
         borderColor: "#000000",
         borderStyle: "solid",
       };
-  
-    <div
-        style={{
-            display: "inline-block",
-            padding: 5,
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
-          <div style={style} key={id.toString()}>
-            <span style={{ fontWeight: "bold" }}>{id}</span>
-          </div>
-    </div>
+      //flexDirection: "row",
+      //justifyContent: "center",
+    return(
+      <div
+          style={{
+              display: "inline-block",
+              padding: 5,
 
+            }}
+          >
+            <div style={style} key={id.toString()}>
+              <span style={{ fontWeight: "bold" }}>{id}</span>
+            </div>
+      </div>
+  );
 }
 export default Node;
   

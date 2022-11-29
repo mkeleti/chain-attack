@@ -32,7 +32,7 @@ const Home: NextPage = () => {
         <Box sx={{ padding: 15 }}>
           <Center>
             {/* Chain Animation with hashes and nodes as props */}
-            <Blockchain />
+            <Blockchain nodes={nodes}/>
           </Center>
         </Box>
       </main>

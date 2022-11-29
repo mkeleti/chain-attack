@@ -10,11 +10,10 @@ interface Props {
 
 export const BaseLayout: FC<Props> = ({ children }) => {
   return (
-    <MantineProvider theme={{ colorScheme: 'dark' }} withGlobalStyles withNormalizeCSS>
+    
       <AppShell styles={{ main: { padding: 0 } }} header={<Header />}>
        <main>{children}</main>
       </AppShell>
-    </MantineProvider>
   );
 };
 
