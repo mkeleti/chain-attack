@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Box } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { Subscription } from "../../web3/newHeads";

@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 import { Box, Center, Group } from "@mantine/core";
 import type { NextPage } from "next";
 import Head from "next/head";
 import NextButton from "../components/layout/navigation/NextButton";
 
-const Attack: NextPage = () => {
+const Attack: NextPage = (props) => {
   return (
     <div>
       <Head>

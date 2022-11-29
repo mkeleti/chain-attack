@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Box } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { Subscription } from "../../web3/newHeads";
@@ -13,14 +14,15 @@ export const Blockchain = (nodes: PropTypes) => {
   const [blocks, setBlocks] = useState([]);
   const [index, setIndex] = useState(0);
   const nodeArray = [];
-  const nodeCount = 11;   //sorry I'm hardcoding this for a sec -emma 11/22
+  const nodeCount = 11; //sorry I'm hardcoding this for a sec -emma 11/22
 
-  if(index == 0){         // this is supposed to initialize nodes but it actually doesnt work
-    for (let i = 0; i < nodeCount; i++) {   
+  if (index == 0) {
+    // this is supposed to initialize nodes but it actually doesnt work
+    for (let i = 0; i < nodeCount; i++) {
       nodeArray.push(Node(i));
     }
     console.log("there are ", nodeArray.length, " nodes");
-  }  
+  }
 
   useEffect(() => {
     Subscription.on("data", (data) => {
@@ -53,7 +55,7 @@ export const Blockchain = (nodes: PropTypes) => {
       <Box>{nodeArray}</Box>
       <Box>{blocks}</Box>;
     </div>
-  )
+  );
 };
 
 export default Blockchain;
