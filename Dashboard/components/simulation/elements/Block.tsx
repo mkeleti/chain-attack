@@ -1,17 +1,12 @@
-import {
-  Box,
-  Group,
-  HoverCard,
-  Text,
-} from "@mantine/core";
+import { Box, Group, HoverCard, Text } from "@mantine/core";
 import type { FC } from "react";
 import { BlockHeader } from "web3-eth";
 
 interface propTypes {
-  data: BlockHeader
+  data: BlockHeader;
 }
 
-const Block: FC<any> = ( props: propTypes ) => {
+const Block: FC<any> = (props: propTypes) => {
   console.log(props.data);
   return (
     <HoverCard>
