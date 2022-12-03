@@ -1,20 +1,18 @@
-
-
-version: '3.8'
+version: "3.8"
 
 networks:
-# Define the network for the containers
+  # Define the network for the containers
   priv-eth-net:
+    name: priv-eth-net
     driver: bridge
     # Set container to connect to the host through a bridge to localhost
     ipam:
       config:
-      # Define the subnet for the network which allows limiting maximum capacity
-      - subnet: 255.255.255.248/27
+        # Define the subnet for the network which allows limiting maximum capacity
+        - subnet: 255.255.255.248/27
 
 services:
-
-# Ethereum Network
+  # Ethereum Network
 
   geth-bootnode: # Boots the blockchain
     hostname: geth-bootnode
@@ -29,11 +27,11 @@ services:
       #   --syncmode "full"
       #--ipcdisable
       #--maxpeers 3
-     --netrestrict "255.255.255.248/28"
-     --nat extip:"255.255.255.242"
-     --allow-insecure-unlock
-     --nodekey /root/nodekeys/bootnode.txt 
-     --config /root/bootnode.toml
+      --netrestrict "255.255.255.248/28"
+      --nat extip:"255.255.255.242"
+      --allow-insecure-unlock
+      --nodekey /root/nodekeys/bootnode.txt
+      --config /root/bootnode.toml
     networks:
       priv-eth-net:
         ipv4_address: "255.255.255.242"
@@ -50,8 +48,8 @@ services:
     build: blockchain-docker
 
     depends_on:
-      - geth-bootnode    
-    command: 
+      - geth-bootnode
+    command:
       --bootnodes "enode://43974299a4c52b220d8eed430a7ed1479f29548041e3ca67ddc1a4886835878c174d45dfd9e73ebd4901e8071c5bb19003f52e4e408e8ec5ce350f8f74a335a8@255.255.255.242:30301"
       --allow-insecure-unlock
       --http
@@ -62,13 +60,13 @@ services:
       --graphql
       --netrestrict="255.255.255.248/28"
       --ws
-      --ws.origins '*' 
+      --ws.origins '*'
       --ws.port 8546
       --ws.addr 0.0.0.0
-      --ws.api "admin,debug,web3,eth,txpool,personal,clique,miner,net" 
+      --ws.api "admin,debug,web3,eth,txpool,personal,clique,miner,net"
       --syncmode "full"
       --gcmode "archive"
-      --txlookuplimit 0 
+      --txlookuplimit 0
       --nodekey=/root/nodekeys/rpc.txt
       --port 30304
       --nat extip:"255.255.255.243"
@@ -109,8 +107,8 @@ services:
     volumes:
       - ./blockchain-docker/blockchain-data/backups:/root/backups
     ports:
-    - "30305:30305"
-    - "30305:30305/udp"
+      - "30305:30305"
+      - "30305:30305/udp"
   geth-signer-2: # Signs/Mines Transactions
     hostname: geth-signer2
     container_name: minerNode2
@@ -175,36 +173,33 @@ services:
     volumes:
       - ./blockchain-docker/blockchain-data/backups:/root/backups
 
-
-
-# Blockscout
-  
+  # Blockscout
 
   redis_db:
-    image: 'redis:alpine'
+    image: "redis:alpine"
     ports:
       - 6379:6379
     container_name: redis-blkscout
     command: redis-server
     networks:
-    - priv-eth-net
-   # volumes:
-   #   - ./redis-data:/data
+      - priv-eth-net
+    # volumes:
+    #   - ./redis-data:/data
 
   db:
     image: postgres:14
     restart: always
     container_name: postgres-blkscout
     environment:
-        POSTGRES_PASSWORD: ''
-        POSTGRES_USER: 'postgres'
-        POSTGRES_HOST_AUTH_METHOD: 'trust'
-   # volumes:
+      POSTGRES_PASSWORD: ""
+      POSTGRES_USER: "postgres"
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+    # volumes:
     #  - ./postgres-data:/var/lib/postgresql/data
     ports:
       - 7432:5432
     networks:
-    - priv-eth-net
+      - priv-eth-net
 
   blockscout:
     depends_on:
@@ -214,47 +209,47 @@ services:
       - geth-rpc-endpoint
     image: blockscout/blockscout:4.1.8
     restart: always
-    container_name: 'blkscout'
+    container_name: "blkscout"
     links:
       - db:database
     command: bash -c "bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\" && bin/blockscout start"
     extra_hosts:
-      - 'host.docker.internal:host-gateway'
+      - "host.docker.internal:host-gateway"
     env_file:
-      -  ./envs/common-blockscout.env
+      - ./envs/common-blockscout.env
     networks:
-        - priv-eth-net
+      - priv-eth-net
     environment:
-        ETHEREUM_JSONRPC_VARIANT: 'geth'
-        BLOCK_TRANSFORMER: 'clique'
-        ETHEREUM_JSONRPC_HTTP_URL: http://host.docker.internal:8545/
-        DATABASE_URL: postgresql://postgres:@host.docker.internal:7432/blockscout?ssl=false
-        ECTO_USE_SSL: 'false'
-        SECRET_KEY_BASE: '56NtB48ear7+wMSf0IQuWDAAazhpb31qyc7GiyspBP2vh7t5zlCsF5QDv76chXeN'
+      ETHEREUM_JSONRPC_VARIANT: "geth"
+      BLOCK_TRANSFORMER: "clique"
+      ETHEREUM_JSONRPC_HTTP_URL: http://host.docker.internal:8545/
+      DATABASE_URL: postgresql://postgres:@host.docker.internal:7432/blockscout?ssl=false
+      ECTO_USE_SSL: "false"
+      SECRET_KEY_BASE: "56NtB48ear7+wMSf0IQuWDAAazhpb31qyc7GiyspBP2vh7t5zlCsF5QDv76chXeN"
     ports:
       - 4000:4000
     # volumes:
-#   - ./logs/:/app/logs/
+  #   - ./logs/:/app/logs/
 
   smart-contract-verifier:
     image: ghcr.io/blockscout/smart-contract-verifier:${SMART_CONTRACT_VERIFIER_DOCKER_TAG:-latest}
     restart: always
-    container_name: 'smart-contract-verifier'
+    container_name: "smart-contract-verifier"
     env_file:
-      -  ./envs/common-smart-contract-verifier.env
+      - ./envs/common-smart-contract-verifier.env
     ports:
       - 8043:8043
     networks:
-    - priv-eth-net
+      - priv-eth-net
 
-# PM2 simulates transactions on the network.
+  # PM2 simulates transactions on the network.
   pm2:
     build: blockchain-docker/tx-simulate
     restart: always
     container_name: PM2
     networks:
-    - priv-eth-net
+      - priv-eth-net
     depends_on:
-    - geth-rpc-endpoint
+      - geth-rpc-endpoint
     ports:
-    - 8000:8000
+      - 8000:8000
