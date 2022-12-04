@@ -5,16 +5,21 @@ This script initiates a 51% attack.
 """
 import docker
 from docker.models import containers, networks, volumes, images
+from fastapi.encoders import jsonable_encoder
+import json
+import codecs
 
 IMAGE = "mkeleti/geth-attack"  # Image to create new containers from
 BOOTNODE = '"enode://43974299a4c52b220d8eed430a7ed1479f29548041e3ca67ddc1a4886835878c174d45dfd9e73ebd4901e8071c5bb19003f52e4e408e8ec5ce350f8f74a335a8@255.255.255.242:30301"'  # Primary bootnode address
 TYPES = {"container": containers.Container, "network": networks.Network,
          "volume":  volumes.Volume, "image": images.Image}
+CLIENT = docker.from_env()
 
 
 class Control:
     def __init__(self):
         CLIENT = docker.from_env()
+        self.apiclient = docker.APIClient()
         self.containers = CLIENT.containers
         self.networks = CLIENT.networks
         self.volumes = CLIENT.volumes
@@ -47,7 +52,7 @@ class Control:
             # Node dictionary is returned
         return nodes
 
-    def fetchNetworks(self) -> dict[str, networks.Network | None]:
+    def fetchNetworks(self, all=False) -> dict[str, networks.Network | None]:
         """
         This method is responsible for fetching each geth-connected network
         and sorting them by purpose.
@@ -145,6 +150,64 @@ class Control:
 
     def importChain(self):
         return None
+
+    def fetchNodeConfigs(self):
+        nodes = self.fetchNodes()
+        dict_names = ["miners", "rpcs", "boots"]
+        diction = {}
+        for name in dict_names:
+            nodelist = nodes[name]
+            subdiction = {}
+            for node in nodelist:
+                subdiction[node.name] = self.apiclient.inspect_container(
+                    node.name)
+            diction[name] = subdiction
+        return diction
+
+    def fetchNodeConfig(self):
+        nodes = self.fetchNodes()
+        dict_names = ["miners", "rpcs", "boots"]
+        diction = {}
+        for name in dict_names:
+            nodelist = nodes[name]
+            subdiction = {}
+            for node in nodelist:
+                subdiction[node.name] = self.apiclient.inspect_container(
+                    node.name)
+            diction[name] = subdiction
+        return diction
+
+    def fetchPeers(self):
+        nodes = self.fetchNodes()
+        return_val = {}
+        dict_names = ["miners", "rpcs", "boots"]
+        config = self.fetchNodeConfigs()
+        for name in dict_names:
+            nodelist = nodes[name]
+            sub_return = {}
+            for node in nodelist:
+                result = node.exec_run(workdir="/root/.ethereum",
+                                       cmd="geth attach /root/.ethereum/geth.ipc --exec 'admin.peers'")
+                x = codecs.decode(result.output)
+                ip_array = []
+                for count in range(x.count("remoteAddress:")):
+                    y = x.find("remoteAddress:")
+                    ip_array.append(x[y+16:y+31])
+                    print(x[y+16:y+31])
+                    x = x[y+31:]
+                connected_nodes = []
+                for ip in ip_array:
+                    for name2 in dict_names:
+                        for node2 in nodes[name2]:
+                            nodeconfig = config[name2][node2.name]["NetworkSettings"][
+                                "Networks"]["priv-eth-net"]["IPAMConfig"]["IPv4Address"]
+                            if nodeconfig == ip:
+                                connected_nodes.append(node2.name)
+
+                sub_return[node.name] = connected_nodes
+            return_val[name] = sub_return
+
+        return return_val
 
 
 """

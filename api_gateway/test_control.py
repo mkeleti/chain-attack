@@ -1,6 +1,6 @@
 import unittest
 import random
-from app.lib.node_control import Control
+from app.node_control import Control
 
 
 class fetchTest(unittest.TestCase):
@@ -34,13 +34,11 @@ class fetchTest(unittest.TestCase):
             len(self.control.fetchNodes()["miners"]), 3, msg="Miner not created.")
         container.remove(force=True)
 
-    def test_rpc_creation(self):
+    def test_fetch_peers(self):
         """
           Test that an rpc node can be successfully created
         """
         port = random.randrange(40000, 50000)
-        container = self.control.createMiner(
-            "0xf30e8252fd22963b15b93ef34324575f4acc437a", port)
-        self.assertGreater(
-            len(self.control.fetchNodes()["rpcs"]), 1, msg="RPC not created.")
-        container.remove(force=True)
+        val = self.control.fetchPeers()
+        print(val)
+        return self.assertDictEqual(self.control.fetchPeers(), "he", msg=val)

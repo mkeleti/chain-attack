@@ -1,12 +1,24 @@
 from fastapi import FastAPI
 from typing import Union
 import node_control
-import json
 from fastapi.encoders import jsonable_encoder
-import re
+import json
 app = FastAPI()
 
 CONTROL = node_control.Control()
+
+
+@app.get("/")
+async def read_root():
+    nodes = CONTROL.fetchNodes()
+    return_val = {}
+    dict_names = ["miners", "rpcs", "boots"]
+    for name in dict_names:
+        list = []
+        for node in range(len(nodes[name])):
+            list.append(nodes["miners"][node].id)
+        return_val[name] = list
+    return jsonable_encoder(return_val)
 
 
 @app.get("/miners")
@@ -36,10 +48,16 @@ async def read_root():
     return return_val
 
 
-@app.get("/logs/{item_id}")
-async def read_item(item_id: int):
+@app.get("/logs/{miner_num}")
+async def read_item(miner_num: int):
     nodes = CONTROL.fetchNodes()
-    miner = nodes["miners"][item_id]
+    miner = nodes["miners"][miner_num]
     name = miner.name
     logs = str(str(jsonable_encoder(miner.logs(tail=10)))).split("\n")
     return jsonable_encoder(logs)
+
+
+@app.get("/nodes")
+async def read_item():
+    nodes = CONTROL.fetchPeers()
+    return jsonable_encoder(nodes)
