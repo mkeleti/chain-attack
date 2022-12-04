@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from typing import Union
-from lib import attack
 
 app = FastAPI()
 
