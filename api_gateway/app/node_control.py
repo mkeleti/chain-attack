@@ -136,6 +136,16 @@ class Control:
 
         return self.containers.run(IMAGE, detach=True)
 
+    def createForknet(self):
+        # TODO create the forked network
+        return None
+
+    def exportChain(self):
+        return None
+
+    def importChain(self):
+        return None
+
 
 """
 This function creates a node with a specified set of commands
