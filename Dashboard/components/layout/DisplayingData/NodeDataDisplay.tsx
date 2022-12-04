@@ -16,7 +16,7 @@ export const NodeDataDisplay: FC<any> = (props: propTypes) => {
                 justifyContent: "center",
                 alignItems: "center",
                 width: 300,
-                margin: 10,
+                margin: 30,
                 height: 150,
                 borderRadius: 8,
                 borderWidth: 1,

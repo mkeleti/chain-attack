@@ -20,10 +20,10 @@ export const DataDrawer = () => {
       >
         {
             <div>
-                <NextButton href="/blockscout" title="Blockchain Explorer" color="violet" size="lg"></NextButton><br></br>
-                <NextButton href="/attack" title="Initiate Attack" color="pink" size="lg"></NextButton><br></br>
-                <NextButton href="/" title="View the Chain" color="violet" size="lg"></NextButton><br></br>
-                <NodeDataDisplay />
+                <NextButton href="/blockscout" title="Blockchain Explorer" color="violet" size="md"></NextButton>
+                <NextButton href="/attack" title="Initiate Attack" color="pink" size="md"></NextButton>
+                <NextButton href="/" title="View the Chain" color="violet" size="md"></NextButton>
+                <NodeDataDisplay/>
             </div>
         }
       </Drawer>
