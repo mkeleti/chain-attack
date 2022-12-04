@@ -15,7 +15,7 @@ const style = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  backgroundColor: "violet",
+  backgroundColor: "#8a9af3", 
   borderRadius: 10,
   borderWidth: 2,
   borderColor: "#000000",

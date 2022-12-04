@@ -15,19 +15,19 @@ export const NodeDataDisplay: FC<any> = (props: propTypes) => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                width: 300,
+                width: 390,
                 margin: 30,
                 height: 150,
-                borderRadius: 8,
-                borderWidth: 1,
-                borderColor: "#dee2e6",
+                borderRadius: 10,
+                borderWidth: 2,
+                borderColor: "#000000",
                 borderStyle: "solid",
-                backgroundColor: "#fff",
+                backgroundColor: "#e5f3f2",
                 boxShadow:
                 "0 1px 3px rgba(0, 0, 0, 0.05),rgba(0, 0, 0, 0.05) 0px 20px 25px -5px,rgba(0, 0, 0, 0.04) 0px 10px 10px -5px",
                 }}
         >
-        {<div>where the console logs will go</div>}
+        {<Text size="lg" color="000000" weight="bold">where the data will go</Text>}
         </Box>
     );
 }

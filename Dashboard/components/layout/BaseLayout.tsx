@@ -10,9 +10,9 @@ interface Props {
 
 export const BaseLayout: FC<Props> = ({ children }) => {
   return (
-      <AppShell styles={{ main: { padding: 0 } }} header={<Header />} drawer={<DataDrawer />}>
-        <main>{children}</main>
+      <AppShell styles={{ main: { padding: 0 } }} drawer={<DataDrawer />}>
         <DataDrawer/>
+        <main>{children}</main>
       </AppShell>
   );
 };
