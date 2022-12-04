@@ -46,7 +46,10 @@ services:
     env_file:
       - blockchain-docker/config/.env
     build: blockchain-docker
-
+    labels:
+      - "traefik.http.services.rpc.loadbalancer.server.port=8546"
+      - "traefik.http.routers.api_docs.rule=Path(`/containers/rpc`)"
+      - "traefik.http.routers.api_docs.entrypoints=web"
     depends_on:
       - geth-bootnode
     command:
@@ -210,6 +213,9 @@ services:
     image: blockscout/blockscout:4.1.8
     restart: always
     container_name: "blkscout"
+    labels:
+      - "traefik.http.services.api_gateway.loadbalancer.server.port=4000"
+      - "traefik.http.routers.api_gateway.rule=Path(`/blockscout`)"
     links:
       - db:database
     command: bash -c "bin/blockscout eval \"Elixir.Explorer.ReleaseTasks.create_and_migrate()\" && bin/blockscout start"
@@ -247,6 +253,7 @@ services:
     build: blockchain-docker/tx-simulate
     restart: always
     container_name: PM2
+    labels: ["traefik.http.services.api_gateway.loadbalancer.server.port=8000"]
     networks:
       - priv-eth-net
     depends_on:
@@ -258,6 +265,11 @@ services:
   api_gateway:
     build: api_gateway
     restart: always
+    labels:
+      - "traefik.http.services.api_docs.loadbalancer.server.port=81"
+      - "traefik.http.routers.api_docs.rule=Path(`/containers/docs`)"
+      - "traefik.http.services.api_gateway.loadbalancer.server.port=9000"
+      - "traefik.http.routers.api_gateway.rule=Path(`/containers/api`)"
     container_name: api_gateway
     networks:
       - priv-eth-net
