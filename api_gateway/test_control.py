@@ -32,8 +32,7 @@ class fetchTest(unittest.TestCase):
             "0xf30e8252fd22963b15b93ef34324575f4acc437a", port)
         self.assertGreater(
             len(self.control.fetchNodes()["miners"]), 3, msg="Miner not created.")
-        container.kill()
-        container.remove()
+        container.remove(force=True)
 
     def test_rpc_creation(self):
         """
@@ -44,5 +43,4 @@ class fetchTest(unittest.TestCase):
             "0xf30e8252fd22963b15b93ef34324575f4acc437a", port)
         self.assertGreater(
             len(self.control.fetchNodes()["rpcs"]), 1, msg="RPC not created.")
-        container.kill()
-        container.remove()
+        container.remove(force=True)

@@ -21,7 +21,7 @@ class Control:
         self.images = CLIENT.images
         self.bootnode = BOOTNODE
 
-    def fetchNodes(self) -> dict[str, list[containers.Container]]:
+    def fetchNodes(self, all=False) -> dict[str, list[containers.Container]]:
         """
         This method is responsible for fetching each geth node and sorting them by function.
 
@@ -30,7 +30,7 @@ class Control:
         """
         nodes = {"miners": [], "rpcs": [], "boots": []}
         # Defines node dictionary to return
-        for container in self.containers.list():
+        for container in self.containers.list(all):
             # For each container currently running
             image = str(container.image)
             node_name = container.name
@@ -65,7 +65,7 @@ class Control:
         return networks
 
     def createMiner(self, key: str, port: int, network="priv-eth-net") -> containers.Container:
-        miners = self.fetchNodes()["miners"]
+        miners = self.fetchNodes(all=True)["miners"]
         networks = self.fetchNetworks()
         miner_num = len(miners) + 1
         miner_name = "minerNode" + str(miner_num)

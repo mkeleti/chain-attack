@@ -253,3 +253,18 @@ services:
       - geth-rpc-endpoint
     ports:
       - 8000:8000
+
+  # api_gateway is a proxy that routes requests to the correct service.
+  api_gateway:
+    build: api_gateway
+    restart: always
+    container_name: api_gateway
+    networks:
+      - priv-eth-net
+    depends_on:
+      - geth-rpc-endpoint
+      - blockscout
+      - pm2
+    ports:
+      - 80:80
+      - 8000:9000
