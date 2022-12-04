@@ -17,14 +17,24 @@ async function Transact(): Promise<void> {
       to: accounts[tonum],
       value: txval,
     };
-    web3.eth.personal.unlockAccount(accounts[fromnum], "password", 5000).then(() => web3.eth.sendTransaction(tx));
-    console.log("Transaction sent from " + accounts[fromnum] + " to " + accounts[tonum] + " for " + txval + " ETH");
+    web3.eth.personal
+      .unlockAccount(accounts[fromnum], "password", 5000)
+      .then(() => web3.eth.sendTransaction(tx));
+    console.log(
+      "Transaction sent from " +
+        accounts[fromnum] +
+        " to " +
+        accounts[tonum] +
+        " for " +
+        txval +
+        " ETH"
+    );
   });
 }
 
 export default function Simulate(): void {
   console.log("simulating");
-    setInterval(Transact, 1400);
+  setInterval(Transact, 1400);
 }
 
 Simulate();

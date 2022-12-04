@@ -1,2 +1,33 @@
 {
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "eslint.enable": true,
+  "eslint.workingDirectories": ["./Dashboard"],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python"
+  },
+  "python.testing.unittestArgs": [
+    "-v",
+    "-s",
+    "./api_gateway",
+    "-p",
+    "test_*.py"
+  ],
+  "python.testing.pytestEnabled": false,
+  "python.testing.unittestEnabled": true,
+  "python.analysis.exclude": [
+    "blockchain-docker",
+    "Dashboard",
+    "**/pycache",
+    ".git"
+  ],
+  "python.analysis.autoSearchPaths": false,
+  "python.defaultInterpreterPath": "python3",
+  "python.analysis.include": ["api_gateway"]
 }
