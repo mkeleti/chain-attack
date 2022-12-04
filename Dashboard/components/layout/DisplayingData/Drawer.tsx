@@ -3,6 +3,7 @@ import { Drawer, Text, Button, Group, useMantineTheme, Box, DefaultMantineColor,
 import NextButton from './NextButton';
 import { NodeDataDisplay } from './NodeDataDisplay';
 import { ChainStatus } from './ChainStatus';
+import { TransactionsAndBlockData } from './TransactionsAndBlockData';
 
 
 export const DataDrawer = () => {
