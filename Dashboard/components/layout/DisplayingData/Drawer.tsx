@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Drawer, Text, Button, Group, useMantineTheme, Box, DefaultMantineColor, MantineSize  } from '@mantine/core';
 import NextButton from './NextButton';
 import { NodeDataDisplay } from './NodeDataDisplay';
+import { ChainStatus } from './ChainStatus';
 
 
 export const DataDrawer = () => {
@@ -32,6 +33,7 @@ export const DataDrawer = () => {
                 <NextButton href="/attack" title="Initiate Attack" color="#f7d2d2" size="md"></NextButton>
                 <NextButton href="/" title="View the Chain" color="#8a9af3" size="md"></NextButton>
                 <NodeDataDisplay/>
+                <ChainStatus/>
             </div>
         }
       </Drawer>
