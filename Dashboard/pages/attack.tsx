@@ -2,7 +2,7 @@
 import { Box, Center, Group } from "@mantine/core";
 import type { NextPage } from "next";
 import Head from "next/head";
-import NextButton from "../components/layout/navigation/NextButton";
+import NextButton from "../components/layout/DisplayingData/NextButton";
 
 const Attack: NextPage = (props) => {
   return (

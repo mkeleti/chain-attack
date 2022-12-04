@@ -1,7 +1,7 @@
 import { AppShell } from "@mantine/core";
 import type { FC, ReactNode } from "react";
 import { Header } from "./navigation/Header";
-import { DataDrawer } from "./navigation/Drawer";
+import { DataDrawer } from "./DisplayingData/Drawer";
 import { MantineProvider } from "@mantine/core";
 
 interface Props {

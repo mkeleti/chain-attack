@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Drawer, Button, Group, useMantineTheme, DefaultMantineColor, MantineSize  } from '@mantine/core';
+import { Drawer, Button, Group, useMantineTheme, Box, DefaultMantineColor, MantineSize  } from '@mantine/core';
 import NextButton from './NextButton';
+import { NodeDataDisplay } from './NodeDataDisplay';
 
 
 export const DataDrawer = () => {
@@ -22,7 +23,7 @@ export const DataDrawer = () => {
                 <NextButton href="/blockscout" title="Blockchain Explorer" color="violet" size="lg"></NextButton><br></br>
                 <NextButton href="/attack" title="Initiate Attack" color="pink" size="lg"></NextButton><br></br>
                 <NextButton href="/" title="View the Chain" color="violet" size="lg"></NextButton><br></br>
-        
+                <NodeDataDisplay />
             </div>
         }
       </Drawer>
