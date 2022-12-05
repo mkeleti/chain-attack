@@ -1,4 +1,5 @@
-import node_control
+from app import node_control
+from node_control import CLIENT
 
 CONTROL = node_control.Control()
 
@@ -17,3 +18,12 @@ CONTROL = node_control.Control()
 """
 1. If time permits
 """
+
+
+class Attack():
+    def __init__(self):
+        self.attack()
+
+    def attack():
+        return None
+    CLIENT.ds
