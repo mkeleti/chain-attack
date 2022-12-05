@@ -43,19 +43,13 @@ export const DisplayDrawer = () => {
               href="/blockscout"
               title="Blockchain Explorer"
               color="#8a9af3"
-              size="md"
+              size="sm"
             ></NextButton>
             <NextButton
               href="/attack"
               title="Initiate Attack"
               color="#f7d2d2"
-              size="md"
-            ></NextButton>
-            <NextButton
-              href="/"
-              title="View the Chain"
-              color="#8a9af3"
-              size="md"
+              size="sm"
             ></NextButton>
           </Stack>
         </Drawer>

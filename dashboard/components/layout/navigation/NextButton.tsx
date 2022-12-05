@@ -12,7 +12,6 @@ type ButtonProps = {
 };
 
 const buttonStyle = {
-  display: "flex",
   justifyContent: "center",
   alignItems: "center",
   backgroundColor: "#8a9af3",
@@ -20,7 +19,7 @@ const buttonStyle = {
   borderWidth: 2,
   borderColor: "#000000",
   borderStyle: "solid",
-  margin: 10,
+  margin: 3,
 };
 
 const NextButton = (props: ButtonProps) => (
