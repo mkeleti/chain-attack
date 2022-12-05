@@ -18,5 +18,6 @@
   "python.analysis.exclude": ["blockchain", "dashboard", "**/pycache", ".git"],
   "python.analysis.autoSearchPaths": false,
   "python.defaultInterpreterPath": "python3",
-  "python.analysis.include": ["api"]
+  "python.analysis.include": ["api"],
+  "search.useIgnoreFiles": false
 }

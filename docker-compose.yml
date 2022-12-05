@@ -236,7 +236,7 @@ services:
     restart: always
     container_name: "smart-contract-verifier"
     env_file:
-      - ./envs/common-smart-contract-verifier.env
+      - ./blockchain/envs/common-smart-contract-verifier.env
     ports:
       - 8043:8043
     networks:
