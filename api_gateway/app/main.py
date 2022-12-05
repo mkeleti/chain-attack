@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from typing import Union
-import node_control
+from app import node_control
 from fastapi.encoders import jsonable_encoder
 import json
 app = FastAPI()
@@ -60,4 +60,10 @@ async def read_item(miner_num: int):
 @app.get("/nodes")
 async def read_item():
     nodes = CONTROL.fetchPeers()
+    return jsonable_encoder(nodes)
+
+
+@app.get("/nodes/configs")
+async def read_item():
+    nodes = CONTROL.fetchNodeConfigs()
     return jsonable_encoder(nodes)
