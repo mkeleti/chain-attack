@@ -12,17 +12,21 @@ interface propTypes {
 
 export const TransactionsAndBlockData: FC<any> = (props: propTypes) => {
 
+   
+
     return(
-        <div 
-        >
+        <div style={{ display: "flex", 
+                    flexDirection: "row", 
+                    justifyContent: "center",
+                     alignItems: "center"}}>
             <Box
                 sx={{
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    width: 100,
+                    width: 170,
                     height: 100,
-                    margin: 30,
+                    margin: 15,
                     borderRadius: 10,
                     borderWidth: 2,
                     borderColor: "#000000",
@@ -32,14 +36,16 @@ export const TransactionsAndBlockData: FC<any> = (props: propTypes) => {
                     "0 1px 3px rgba(0, 0, 0, 0.05),rgba(0, 0, 0, 0.05) 0px 20px 25px -5px,rgba(0, 0, 0, 0.04) 0px 10px 10px -5px",
                     }}
             >
+                <Text size="md" color="000000" weight="bold">Transactions: </Text>
+            </Box>
             <Box
                 sx={{
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    width: 100,
+                    width: 170,
                     height: 100,
-                    margin: 30,
+                    margin: 15,
                     borderRadius: 10,
                     borderWidth: 2,
                     borderColor: "#000000",
@@ -48,13 +54,9 @@ export const TransactionsAndBlockData: FC<any> = (props: propTypes) => {
                     boxShadow:
                     "0 1px 3px rgba(0, 0, 0, 0.05),rgba(0, 0, 0, 0.05) 0px 20px 25px -5px,rgba(0, 0, 0, 0.04) 0px 10px 10px -5px",
                     }}
-            ></Box>
-            {
-                <>
-                    <Text size="xl" color="000000" weight="bold">Chain Status: </Text>
-                    <Text size="lg" color="FFFFFF" weight="bold">data</Text>
-                </>
-            }
+            >
+                <Text size="md" color="FFFFFF" weight="bold">Blocks: </Text>
+            
             </Box>
         </div>
     );

@@ -34,6 +34,7 @@ export const DataDrawer = () => {
                 <NextButton href="/attack" title="Initiate Attack" color="#f7d2d2" size="md"></NextButton>
                 <NextButton href="/" title="View the Chain" color="#8a9af3" size="md"></NextButton>
                 <NodeDataDisplay/>
+                <TransactionsAndBlockData/>
                 <ChainStatus/>
             </div>
         }
