@@ -19,8 +19,8 @@ services:
     container_name: bootNode
     restart: on-failure
     env_file:
-      - blockchain-docker/config/.env
-    build: blockchain-docker
+      - blockchain/config/.env
+    build: blockchain
     command:
       # --networkid=314159
       # --port 30301
@@ -44,8 +44,8 @@ services:
     container_name: rpcNode
     restart: on-failure
     env_file:
-      - blockchain-docker/config/.env
-    build: blockchain-docker
+      - blockchain/config/.env
+    build: blockchain
 
     depends_on:
       - geth-bootnode
@@ -81,13 +81,13 @@ services:
       priv-eth-net:
         ipv4_address: "255.255.255.243"
     volumes:
-      - ./blockchain-docker/blockchain-data/backups:/root/backups
+      - ./blockchain/blockchain-data/backups:/root/backups
   geth-signer: # Signs/Mines transactions
     hostname: geth-signer
     container_name: minerNode
     env_file:
-      - blockchain-docker/config/.env
-    build: blockchain-docker
+      - blockchain/config/.env
+    build: blockchain
     depends_on:
       - geth-bootnode
       - geth-rpc-endpoint
@@ -105,7 +105,7 @@ services:
       priv-eth-net:
         ipv4_address: "255.255.255.244"
     volumes:
-      - ./blockchain-docker/blockchain-data/backups:/root/backups
+      - ./blockchain/blockchain-data/backups:/root/backups
     ports:
       - "30305:30305"
       - "30305:30305/udp"
@@ -113,8 +113,8 @@ services:
     hostname: geth-signer2
     container_name: minerNode2
     env_file:
-      - blockchain-docker/config/.env
-    build: blockchain-docker
+      - blockchain/config/.env
+    build: blockchain
     depends_on:
       - geth-bootnode
       - geth-rpc-endpoint
@@ -139,14 +139,14 @@ services:
       priv-eth-net:
         ipv4_address: "255.255.255.245"
     volumes:
-      - ./blockchain-docker/blockchain-data/backups:/root/backups
+      - ./blockchain/blockchain-data/backups:/root/backups
 
   geth-signer-3: # Signs/Mines Transactions
     hostname: geth-signer3
     container_name: minerNode3
     env_file:
-      - blockchain-docker/config/.env
-    build: blockchain-docker
+      - blockchain/config/.env
+    build: blockchain
     depends_on:
       - geth-bootnode
       - geth-rpc-endpoint
@@ -171,7 +171,7 @@ services:
       priv-eth-net:
         ipv4_address: "255.255.255.246"
     volumes:
-      - ./blockchain-docker/blockchain-data/backups:/root/backups
+      - ./blockchain/blockchain-data/backups:/root/backups
 
   # Blockscout
 
@@ -216,7 +216,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     env_file:
-      - ./envs/common-blockscout.env
+      - ./blockchain/envs/common-blockscout.env
     networks:
       - priv-eth-net
     environment:
@@ -244,7 +244,7 @@ services:
 
   # PM2 simulates transactions on the network.
   pm2:
-    build: blockchain-docker/tx-simulate
+    build: blockchain/tx-simulate
     restart: always
     container_name: PM2
     networks:
@@ -254,11 +254,11 @@ services:
     ports:
       - 8000:8000
 
-  # api_gateway is a proxy that routes requests to the correct service.
-  api_gateway:
-    build: api_gateway
+  # api is a proxy that routes requests to the correct service.
+  api:
+    build: api
     restart: "no"
-    container_name: api_gateway
+    container_name: api
     networks:
       - priv-eth-net
     depends_on:

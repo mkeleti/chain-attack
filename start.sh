@@ -23,7 +23,7 @@ if [ -x "$(command -v docker)" ]; then
     docker compose restart geth-signer-3
     echo "Done! You can access the website at http://127.0.0.1:3000"
     # ./injectRpcArgs.sh # 51 Attack
-    cd Dashboard || exit
+    cd dashboard || exit
     yarn install
     # yarn build
     echo "Opening website, press CTRL+C to stop"

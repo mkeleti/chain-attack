@@ -1,5 +1,5 @@
 {
-  "name": "chain-dashboard",
+  "name": "Blockchain Attack Dashboard",
   "options": {
     "allow-unauthenticated": true,
     "memory": "256Mi",
