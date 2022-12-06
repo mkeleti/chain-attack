@@ -16,7 +16,7 @@ import { Subscription } from "../../../web3/newHeads";
 
 export const DisplayDrawer = () => {
   const [opened, setOpened] = useState(true);
-  const [blockCount, setBlockCount] = useState(40);
+  const [blockCount, setBlockCount] = useState(0);
 
   const buttonStyle = {
     size: "lg",
@@ -25,7 +25,7 @@ export const DisplayDrawer = () => {
     alignItems: "center",
     backgroundColor: "violet",
     borderRadius: 10,
-    borderWidth: 2,
+    borderWidth: 1.5,
     borderColor: "#000000",
     borderStyle: "solid",
     margin: 50,
@@ -91,8 +91,8 @@ export const DisplayDrawer = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                width: 140,
-                height: 50,
+                width: 200,
+                height: 100,
                 borderRadius: 10,
                 borderWidth: 1.5,
                 borderColor: "#000000",
@@ -101,7 +101,11 @@ export const DisplayDrawer = () => {
                 margin: 8,
                 padding: 4,
               }}
-            ></Box>
+            >
+              <Text size="sm" color="000000" weight="bold">
+                Chain Status: {}
+              </Text>
+            </Box>
           </Stack>
         </Drawer>
       </ScrollArea>

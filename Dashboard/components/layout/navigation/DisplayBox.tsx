@@ -14,7 +14,7 @@ export const DisplayBox: FC<boxProps> = ({ count, title }) => {
         justifyContent: "center",
         alignItems: "center",
         width: 140,
-        height: 50,
+        height: 100,
         borderRadius: 10,
         borderWidth: 1.5,
         borderColor: "#000000",
@@ -26,11 +26,11 @@ export const DisplayBox: FC<boxProps> = ({ count, title }) => {
     >
       {
         <>
-          <Text size="xs" weight="bold">
+          <Text size="sm" weight="bold">
             {title + ":"}
             &nbsp;
           </Text>
-          <Text size="xs" weight="bold">
+          <Text size="sm" weight="bold">
             {count}
           </Text>
         </>
