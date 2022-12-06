@@ -4,7 +4,7 @@ import {
   Card,
   Text,
   ColorSwatch,
-  Popover,
+  HoverCard,
   Center,
 } from "@mantine/core";
 
@@ -16,9 +16,9 @@ interface LegendBoxProps {
 
 const LegendBox = ({ name, color, about }: LegendBoxProps) => {
   return (
-    <Popover width={500}>
-      <Popover.Target>
-        <Card p="xs" radius="md" withBorder>
+    <HoverCard width={500}>
+      <HoverCard.Target>
+        <Card p="xs" radius="md" withBorder style={{ cursor: "pointer" }}>
           <Center>
             <ColorSwatch color={color} />
           </Center>
@@ -35,11 +35,11 @@ const LegendBox = ({ name, color, about }: LegendBoxProps) => {
             {name}
           </Text>
         </Card>
-      </Popover.Target>
-      <Popover.Dropdown>
+      </HoverCard.Target>
+      <HoverCard.Dropdown>
         <Text size="sm">{about}</Text>
-      </Popover.Dropdown>
-    </Popover>
+      </HoverCard.Dropdown>
+    </HoverCard>
   );
 };
 
