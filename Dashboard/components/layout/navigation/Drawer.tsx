@@ -1,12 +1,22 @@
-import { Drawer, Group, Text, Button, ScrollArea, Stack } from "@mantine/core";
+import {
+  Drawer,
+  Box,
+  Group,
+  Text,
+  Button,
+  ScrollArea,
+  Stack,
+} from "@mantine/core";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import NextButton from "./NextButton";
 import { Color } from "p5";
 import { DisplayBox } from "./DisplayBox";
+import { Subscription } from "../../../web3/newHeads";
 
 export const DisplayDrawer = () => {
   const [opened, setOpened] = useState(true);
+  const [blockCount, setBlockCount] = useState(40);
 
   const buttonStyle = {
     size: "lg",
@@ -20,11 +30,16 @@ export const DisplayDrawer = () => {
     borderStyle: "solid",
     margin: 50,
   };
+
   const containerStyle = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
   };
+
+  Subscription.on("data", (input) => {
+    setBlockCount(input.number);
+  });
 
   return (
     <div style={containerStyle}>
@@ -66,8 +81,27 @@ export const DisplayDrawer = () => {
             ></NextButton>
             <Group>
               <DisplayBox title="Transactions" count={0}></DisplayBox>
-              <DisplayBox title="Blocks" count={0}></DisplayBox>
+              <DisplayBox
+                title="Blocks"
+                count={Number(blockCount)}
+              ></DisplayBox>
             </Group>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: 140,
+                height: 50,
+                borderRadius: 10,
+                borderWidth: 1.5,
+                borderColor: "#000000",
+                borderStyle: "solid",
+                backgroundColor: "#fff",
+                margin: 8,
+                padding: 4,
+              }}
+            ></Box>
           </Stack>
         </Drawer>
       </ScrollArea>
