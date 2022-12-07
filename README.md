@@ -101,4 +101,4 @@ See [LICENSE](LICENSE) for more information.
 
 - **[KU Blockchain Institute](https://kublockchain.com)**
 - **[Spencer Museum](https://spencerart.ku.edu)**
-- **Ethereum**
+- **Ethereum Open Source Community**
