@@ -8,6 +8,7 @@ from docker.models import containers, networks, volumes, images
 from fastapi.encoders import jsonable_encoder
 import json
 import codecs
+import fastapi
 
 IMAGE = "mkeleti/geth-attack"  # Image to create new containers from
 BOOTNODE = '"enode://43974299a4c52b220d8eed430a7ed1479f29548041e3ca67ddc1a4886835878c174d45dfd9e73ebd4901e8071c5bb19003f52e4e408e8ec5ce350f8f74a335a8@255.255.255.242:30301"'  # Primary bootnode address
@@ -30,7 +31,7 @@ class Control:
         """
         This method is responsible for fetching each geth node and sorting them by function.
 
-        Returns: 
+        Returns:
         dict: Dictionary containing arrays of containers; {"miners", "rpcs", "boots"}
         """
         nodes = {"miners": [], "rpcs": [], "boots": []}
@@ -57,7 +58,7 @@ class Control:
         This method is responsible for fetching each geth-connected network
         and sorting them by purpose.
 
-        Returns: 
+        Returns:
         dict: Dictionary containing each network; {"priv-eth-net", "fork"}
         """
         networks = {"priv-eth-net": None}
@@ -69,21 +70,23 @@ class Control:
                 networks["fork"] = network
         return networks
 
-    def createMiner(self, key: str, port: int, network="priv-eth-net") -> containers.Container:
+    def createMiner(self, key: str, port: int, nodekey, network="priv-eth-net") -> containers.Container:
         miners = self.fetchNodes(all=True)["miners"]
         networks = self.fetchNetworks()
         miner_num = len(miners) + 1
         miner_name = "minerNode" + str(miner_num)
         if network == "fork":
             miner_name += "_fork"
-        cmds = ["--mine",
+        cmds = ["import",
+                "/root/backups/backup",
+                "--mine",
                 "--miner.noverify",
                 "--unlock "+key,
                 "miner.etherbase "+key,
                 "--password /root/.ethereum/password.txt",
                 "--port "+str(port),
-                "--bootnodes " + self.bootnode
-                # TODO add nodekey?
+                "--bootnodes " + self.bootnode,
+                "--nodekey /root/nodekeys/"+nodekey
                 # TODO add netrestrict?
                 ]
         args = {
@@ -100,8 +103,6 @@ class Control:
         networks = self.fetchNetworks()
         rpc_num = len(rpcs) + 1
         rpc_name = "rpcNode" + str(rpc_num)
-        if network == "fork":
-            miner_name += "_fork"
         cmds = ["--allow-insecure-unlock",
                 "--http",
                 "--http.api admin,debug,web3,eth,txpool,personal,clique,miner,net",
@@ -137,9 +138,36 @@ class Control:
         }
         return self.containers.run(IMAGE, command=cmds, detach=True, **args)
 
-    def createBootnode(self, key: str, port: int, network="priv-eth-net") -> containers.Container:
-
-        return self.containers.run(IMAGE, detach=True)
+    def createBootnode(self, key: str, port: int, api_port: int, network="priv-eth-net") -> containers.Container:
+                rpcs = self.fetchNodes()["rpcs"]
+        networks = self.fetchNetworks()
+        rpc_num = len(rpcs) + 1
+        rpc_name = "rpcNode" + str(rpc_num)
+        cmds = [
+                "--networkid=314159",
+                "--netrestrict",
+                "255.255.255.248/28",
+                "--nat",
+                "extip:255.255.255.242",
+                "--allow-insecure-unlock",
+                "--nodekey",
+                "/root/nodekeys/bootnode.txt",
+                "--config",
+                "/root/bootnode.toml"
+            ]
+        ports = {
+            str(port)+"/tcp": port,
+            str(api_port)+"/tcp": api_port,
+            str(api_port+1)+"/tcp": api_port+1
+        }
+        args = {
+            "name": rpc_name,
+            "cgroup_parent": "docker-eth-attack",
+            "volumes_from": [rpcs[0].id],
+            "ports": ports,
+            "network": networks[network].name
+        }
+        return self.containers.run(IMAGE, command=cmds, detach=True, **args)
 
     def createForknet(self):
         # TODO create the forked network

@@ -68,3 +68,9 @@ async def read_item():
 async def read_item():
     nodes = CONTROL.fetchNodeConfigs()
     return jsonable_encoder(nodes)
+
+
+@app.get("/attack")
+async def read_item():
+    node = attack.attack()
+    return node
