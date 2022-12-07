@@ -11,12 +11,12 @@ export const Block: FC<Props> = ({ block, index }) => {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       {index > 0 && (
-        <motion.svg id={`line-${index}`} width="110" height="55">
+        <motion.svg id={`line-${index}`} width="110" height="45">
           <motion.line
-            x1="55"
+            x1="30"
             y1="0"
-            x2="55"
-            y2="55"
+            x2="30"
+            y2="45"
             stroke="#dee2e6"
             strokeWidth="1"
             initial={{
@@ -47,8 +47,8 @@ export const Block: FC<Props> = ({ block, index }) => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                width: 110,
-                height: 85,
+                width: 60,
+                height: 60,
                 borderRadius: 8,
                 borderWidth: 1,
                 borderColor: "#dee2e6",

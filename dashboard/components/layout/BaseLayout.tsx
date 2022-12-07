@@ -1,6 +1,6 @@
 import { AppShell } from "@mantine/core";
 import type { FC, ReactNode } from "react";
-import { Legend } from "./Legend";
+import { Legend } from "../simulation/Legend";
 import { Sidebar } from "./navigation/Sidebar";
 
 interface Props {

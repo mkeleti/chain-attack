@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Subscription } from "../../web3/newHeads";
 import Block from "./elements/Block";
-import Node from "./elements/Node";
-import { Box } from "@mantine/core";
+import { Box, Stack, Center } from "@mantine/core";
+import { NodeCluster } from "./elements/NodeCluster";
 
 interface PropTypes {
   hashes?: string[];
@@ -12,23 +12,29 @@ interface PropTypes {
 export const Blockchain = ({ nodes }: PropTypes) => {
   const [blocks, setBlocks] = useState([]);
 
-  Subscription.on("data", (block) => {
-    setBlocks([block, ...blocks]);
+  useEffect(() => {
+    Subscription.on("data", (block) => {
+      setBlocks([block, ...blocks]);
+    });
+
+    return () => {
+      Subscription.unsubscribe();
+    };
   });
 
   return (
-    <>
-      <Box>
-        {[...Array(nodes)].map((_, i) => (
-          <Node key={i} id={i} />
-        ))}
+    <Stack spacing="xs">
+      <Box style={{ height: 250, width: 355 }}>
+        <NodeCluster nodes={nodes} />
       </Box>
-      <Box>
-        {blocks.map((block, index) => (
-          <Block key={index} index={index} block={block} />
-        ))}
-      </Box>
-    </>
+      <Center>
+        <Box>
+          {blocks.map((block, index) => (
+            <Block key={index} index={index} block={block} />
+          ))}
+        </Box>
+      </Center>
+    </Stack>
   );
 };
 
