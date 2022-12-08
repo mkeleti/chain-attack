@@ -93,7 +93,7 @@ For a full list of all authors and contributors, see [the contributors page](htt
 
 ## License
 
-This project is licensed under the **GNU Lesser General Public License**.
+This project is licensed under the **GNU Affero General Public License**.
 
 See [LICENSE](LICENSE) for more information.
 
