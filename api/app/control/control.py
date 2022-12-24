@@ -69,6 +69,7 @@ class Network:
         self.boots = sortedClients["boot"]
 
     def getClients(self) -> dict[str, Client]:
+        """Retrieves all geth clients"""
         clients = {}
         containers = CLIENT.containers
         for container in containers.list(all):
@@ -81,6 +82,7 @@ class Network:
         return clients
 
     def sortClients(self) -> dict[str, dict[str, Client]]:
+        """Sorts the clients based off of their function."""
         clients = self.getClients()
         clientDict = {"miner": {}, "rpc": {}, "boot": {}}
         for clientName in clients:
