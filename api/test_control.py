@@ -1,9 +1,9 @@
 import unittest
 import random
-from app.node_control import Control
+from app.control.control import Control, Client
 
 
-class fetchTest(unittest.TestCase):
+class controlTest(unittest.TestCase):
     def setUp(self):
         self.control = Control()
         self.networks = self.control.fetchNetworks()
@@ -42,3 +42,11 @@ class fetchTest(unittest.TestCase):
         val = self.control.fetchPeers()
         print(val)
         return self.assertDictEqual(self.control.fetchPeers(), "he", msg=val)
+
+
+class nodeTest(unittest.TestCase):
+    def setUp(self):
+        self.control = Control()
+        self.node
+        self.networks = self.control.fetchNetworks()
+        self.nodes = self.control.fetchNodes()

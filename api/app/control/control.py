@@ -8,12 +8,72 @@ from docker.models import containers, networks, volumes, images
 from fastapi.encoders import jsonable_encoder
 import json
 import codecs
+from enum import Enum
 
 IMAGE = "mkeleti/geth-attack"  # Image to create new containers from
 BOOTNODE = '"enode://43974299a4c52b220d8eed430a7ed1479f29548041e3ca67ddc1a4886835878c174d45dfd9e73ebd4901e8071c5bb19003f52e4e408e8ec5ce350f8f74a335a8@255.255.255.242:30301"'  # Primary bootnode address
 TYPES = {"container": containers.Container, "network": networks.Network,
          "volume":  volumes.Volume, "image": images.Image}
 CLIENT = docker.from_env()
+
+
+# TODO Refactor and simplify methods. Implement more structured class design.
+
+
+class Client:
+    def __init__(self, container: containers.Container):
+        self.container = container
+        self.name = container.name
+        self.peers = self.getPeers()
+        self.type = self.getType()
+        if self.checkClient() == False:
+            raise Exception("Container not a Geth Client.")
+
+    def injectConsole(self, cmd: str) -> str:
+        """Inject a command into the geth RPC console"""
+        return self.container.exec_run(workdir="/root/.ethereum",
+                                       cmd="geth attach /root/.ethereum/geth.ipc --exec '"+cmd+"'",).output
+
+    def checkClient(self) -> bool:
+        """Checks if container is a geth client"""
+        image = str(self.container.image)
+        if image.count("geth") > 0:
+            return True
+        else:
+            return False
+
+    def getPeers(self) -> str:
+        """Gets the peers of the geth client."""
+        return self.injectConsole("admin.peers")
+
+    def getNodeInfo(self) -> str:
+        """Retrieves the geth nodes info"""
+        return self.injectConsole("admin.nodeInfo")
+
+    def getType(self) -> str:
+        """Get types of client"""
+        types = ["miner", "rpc", "boot"]
+        for type in types:
+            if self.name.count(type) > 0:
+                return type
+        else:
+            raise Exception("Container does not match type.")
+
+
+class Network:
+    def __init__(self):
+        self.clients = self.getClients()
+
+    def getClients(self):
+        clients = dict
+        containers = CLIENT.containers
+        for container in containers.list(all):
+            try:
+                client = Client(container)
+            except:
+                pass
+            else:
+                clients[client.name] = client
 
 
 class Control:

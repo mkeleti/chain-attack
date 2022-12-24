@@ -1,6 +1,6 @@
-import node_control
+from control.control import Control
 
-CONTROL = node_control.Control()
+CONTROL = Control()
 
 """
 1. Create new docker network
