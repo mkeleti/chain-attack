@@ -63,17 +63,29 @@ class Client:
 class Network:
     def __init__(self):
         self.clients = self.getClients()
+        sortedClients = self.sortClients()
+        self.miners = sortedClients["miner"]
+        self.rpcs = sortedClients["rpc"]
+        self.boots = sortedClients["boot"]
 
-    def getClients(self):
-        clients = dict
+    def getClients(self) -> dict[str, Client]:
+        clients = {}
         containers = CLIENT.containers
         for container in containers.list(all):
             try:
                 client = Client(container)
             except:
-                pass
+                None
             else:
                 clients[client.name] = client
+        return clients
+
+    def sortClients(self) -> dict[str, dict[str, Client]]:
+        clients = self.getClients()
+        clientDict = {"miner": {}, "rpc": {}, "boot": {}}
+        for clientName in clients:
+            clientDict[clients[clientName].type][clientName] = clients[clientName]
+        return clientDict
 
 
 class Control:

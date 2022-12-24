@@ -1,6 +1,6 @@
 import unittest
 import random
-from app.control.control import Control, Client
+from app.control.control import Control, Client, Network, CLIENT
 
 
 class controlTest(unittest.TestCase):
@@ -23,7 +23,6 @@ class controlTest(unittest.TestCase):
             self.assertGreater(
                 len(self.nodes[node]), 0, msg=node+" not found.")
 
-    def test_miner_creation(self):
         """
           Test that a miner can be successfully created
         """
@@ -34,7 +33,6 @@ class controlTest(unittest.TestCase):
             len(self.control.fetchNodes()["miners"]), 3, msg="Miner not created.")
         container.remove(force=True)
 
-    def test_fetch_peers(self):
         """
           Test that an rpc node can be successfully created
         """
@@ -44,9 +42,12 @@ class controlTest(unittest.TestCase):
         return self.assertDictEqual(self.control.fetchPeers(), "he", msg=val)
 
 
-class nodeTest(unittest.TestCase):
+class clientTest(unittest.TestCase):
     def setUp(self):
         self.control = Control()
-        self.node
-        self.networks = self.control.fetchNetworks()
-        self.nodes = self.control.fetchNodes()
+        self.network = Network()
+        self.clients = self.network.clients
+
+    def test_check(self):
+        clients = self.network.getClients()
+        return self.assertEqual(clients.keys().__len__(), 5, msg=clients.keys())
